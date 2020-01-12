@@ -19,8 +19,8 @@ target/
 *.iml
 *.ipr
 /target/**
-/vue-manage-system/dist/**
-/vue-manage-system/node_modules/**
+src\main\resources\static/vue-manage-system/dist/**
+src\main\resources\static/vue-manage-system/node_modules/**
 
 
 ### NetBeans ###
