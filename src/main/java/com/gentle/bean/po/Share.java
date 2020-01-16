@@ -17,5 +17,7 @@ public class Share {
 
     private Date updateTime;
 
+    private Integer userId;
+
 
 }

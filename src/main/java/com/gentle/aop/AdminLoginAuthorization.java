@@ -13,6 +13,8 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Description:
@@ -24,9 +26,8 @@ import javax.servlet.http.HttpServletRequest;
 //@Component
 //@Aspect
 public class AdminLoginAuthorization {
-    @Autowired
-    RedisService redisService;
 
+    public static Map<String,Object > map = new HashMap<>();
 
     @Pointcut("execution(public * com.gentle.controller.admin.*.*(..))")
     public void authorization1() {
@@ -37,16 +38,13 @@ public class AdminLoginAuthorization {
         HttpServletRequest httpServletRequest = RequestAndResponseUtils.getRequest();
         String uuId = httpServletRequest.getHeader("token");
         if (uuId == null || uuId.isEmpty()) {
-            throw  new UnloginException("没有登录");
+            throw new UnloginException("没有登录");
         }
-//        String s = redisService.get(uuId);
-//        AdminInfo adminInfo = JsonUtil.jsonToObject(s, AdminInfo.class);
-//        if (adminInfo == null){
-//            throw  new UnloginException("非法登录");
-//        }
-//        RequestAndResponseUtils.getRequest().setAttribute("teacherInfo",adminInfo);
+
+        if(map.get(uuId)==null){
+            throw new UnloginException("没有登录");
+        }
+
+
     }
-//
-
-
 }
