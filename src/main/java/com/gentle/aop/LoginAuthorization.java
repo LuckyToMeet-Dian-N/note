@@ -1,21 +1,13 @@
 package com.gentle.aop;
 
-import com.gentle.bean.po.Users;
 import com.gentle.exception.UnloginException;
-import com.gentle.utils.JsonUtil;
-import com.gentle.utils.RedisService;
 import com.gentle.utils.RequestAndResponseUtils;
-import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Description: 拦截未登录的用户
@@ -27,8 +19,8 @@ import javax.servlet.http.HttpSession;
 //@Component
 //@Aspect
 public class LoginAuthorization {
-    @Autowired
-    RedisService redisService;
+
+    public static Map<String,Object > map = new HashMap<>();
 
     @Pointcut("execution(public * com.gentle.controller.user.*.*(..))")
     public void authorization() {
@@ -43,12 +35,10 @@ public class LoginAuthorization {
             throw  new UnloginException("没有登录");
         }
 
-        String s = redisService.hashGet(uuId,"users");
-        Users studentInfo = JsonUtil.jsonToObject(s, Users.class);
-        if (studentInfo == null){
+        if (map.get(uuId) == null){
             throw  new UnloginException("非法登录");
         }
 
-        RequestAndResponseUtils.getRequest().setAttribute("users",studentInfo);
+        RequestAndResponseUtils.getRequest().setAttribute("users",map.get(uuId));
     }
 }

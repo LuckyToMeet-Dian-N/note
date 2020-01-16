@@ -20,4 +20,6 @@ public interface UserInfoMapper extends BaseMapper<Users> {
 
     @Update("update users set password = #{password} where id= #{userId}")
     int updatePassword(@Param("password") String password, @Param("userId") int userId);
+    @Select("select count(*) as sheets from users group by date_format(create_time,'%Y-%m') limit 5 ")
+    List<Integer> selectTimebyMon();
 }

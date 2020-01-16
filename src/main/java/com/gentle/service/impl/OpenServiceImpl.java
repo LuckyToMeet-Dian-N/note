@@ -1,17 +1,15 @@
 package com.gentle.service.impl;
 
+import com.gentle.aop.AdminLoginAuthorization;
+import com.gentle.aop.LoginAuthorization;
 import com.gentle.bean.po.Admins;
 import com.gentle.bean.po.Users;
 import com.gentle.exception.CheckException;
 import com.gentle.mapper.OpenUsersMapper;
 import com.gentle.service.OpenService;
-import com.gentle.utils.JsonUtil;
-import com.gentle.utils.RedisService;
-import com.gentle.utils.RequestAndResponseUtils;
 import com.gentle.utils.UuidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 /**
  * @author Gentle
@@ -19,8 +17,6 @@ import org.springframework.util.StringUtils;
  */
 @Service
 public class OpenServiceImpl implements OpenService {
-    @Autowired
-    private RedisService<String> redisService;
 
     @Autowired
     OpenUsersMapper openUsersMapper;
@@ -36,8 +32,7 @@ public class OpenServiceImpl implements OpenService {
             throw new CheckException("密码不正确");
         }
         String token = UuidUtil.get32UUID();
-        redisService.hashSet(token, "users", JsonUtil.objectToJson(users), 60 * 60 * 6);
-
+        LoginAuthorization.map.put(token,users);
         return token;
     }
 
@@ -51,8 +46,7 @@ public class OpenServiceImpl implements OpenService {
             throw new CheckException("输入密码不正确");
         }
         String token = UuidUtil.get32UUID();
-        redisService.hashSet(token, "admin", JsonUtil.objectToJson(adminInfo), 60 * 60 * 6);
-
+        AdminLoginAuthorization.map.put(token,adminInfo);
         return token;
     }
 

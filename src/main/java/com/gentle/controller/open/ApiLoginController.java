@@ -6,7 +6,10 @@ import com.gentle.result.ResultBean;
 import com.gentle.service.OpenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin("*")
@@ -26,7 +29,7 @@ public class ApiLoginController {
 
 
     @PostMapping(value = "/admin/login")
-    public ResultBean<String> adminLogin(@RequestParam(value = "adminName") String number, @RequestParam(value = "password") String pwd) {
+    public ResultBean<String> adminLogin(@RequestParam(value = "account") String number, @RequestParam(value = "password") String pwd) {
         if (StringUtils.isEmpty(number) || StringUtils.isEmpty(pwd)) {
             throw new CheckException("用户名或密码不能为空");
         }

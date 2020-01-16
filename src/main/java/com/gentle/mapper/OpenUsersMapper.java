@@ -21,8 +21,8 @@ public interface OpenUsersMapper extends BaseMapper<Users> {
     @Select("select * from users where email = #{email}")
     Users selectUserInfoByEmail(@Param("email") String email);
 
-    @Select("select * from admins where admin_name = #{admin_name}")
-    Admins selectAdminInfoByEmail(@Param("admin_name") String email);
+    @Select("select * from admins where account = #{account}")
+    Admins selectAdminInfoByEmail(@Param("account") String account);
 
     @Insert("insert into users(user_name,email,password) value(#{userName},#{email},#{password})")
     int insertUserInfo(Users users);
