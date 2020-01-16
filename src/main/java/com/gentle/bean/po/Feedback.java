@@ -3,6 +3,7 @@ package com.gentle.bean.po;
 import lombok.Data;
 
 import javax.persistence.Id;
+import java.util.Date;
 
 /**
  * @author Gentle
@@ -20,4 +21,7 @@ public class Feedback {
     private Boolean isReply;
 
     private Integer userId;
+
+    private Date createTime;
+
 }
