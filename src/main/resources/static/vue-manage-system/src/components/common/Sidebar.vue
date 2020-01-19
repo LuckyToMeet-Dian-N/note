@@ -84,9 +84,15 @@ export default {
                     ]
                 },
                 {
-                    icon: 'el-icon-pie-chart',
-                    index: 'charts',
-                    title: 'schart图表'
+                    icon: 'el-icon-lx-cascades',
+                    index: '3',
+                    title: '反馈管理',
+                     subs: [
+                        {
+                            index: 'feedBack',
+                            title: '反馈列表'
+                        },
+                    ]
                 },
             ]
         };

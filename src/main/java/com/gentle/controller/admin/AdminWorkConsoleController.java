@@ -27,7 +27,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/admin/")
 @CrossOrigin("*")
-public class WorkConsoleController {
+public class AdminWorkConsoleController {
 
     @Resource
     NoteMapper noteMapper;

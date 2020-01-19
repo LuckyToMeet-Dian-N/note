@@ -16,7 +16,7 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping(value = "/api/admin/")
 @CrossOrigin("*")
-public class FeedBackController {
+public class AdminFeedBackController {
 
     @Resource
     FeedBackService feedBackService;

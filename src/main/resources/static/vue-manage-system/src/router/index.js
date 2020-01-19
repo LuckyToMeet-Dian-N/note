@@ -27,7 +27,13 @@ export default new Router({
                 {
                    path: '/orders',
                     component: () => import( '../components/page/orders.vue'),
-                    meta: { title: '用户列表' }
+                    meta: { title: '订单列表' }
+                }
+                ,
+                {
+                   path: '/feedBack',
+                    component: () => import( '../components/page/Feedback.vue'),
+                    meta: { title: '订单列表' }
                 }
                 
             ]

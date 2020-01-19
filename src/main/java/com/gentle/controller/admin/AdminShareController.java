@@ -25,7 +25,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/admin/")
 @CrossOrigin("*")
-public class ShareController {
+public class AdminShareController {
 
     @Resource
     ShareMapper shareMapper;
