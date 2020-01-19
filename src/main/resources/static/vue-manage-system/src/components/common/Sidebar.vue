@@ -94,6 +94,34 @@ export default {
                         },
                     ]
                 },
+                {
+                    icon: 'el-icon-lx-cascades',
+                    index: '4',
+                    title: '分享管理',
+                     subs: [
+                        {
+                            index: 'share',
+                            title: '分享列表'
+                        },
+                        
+                    ]
+                },
+                {
+                    icon: 'el-icon-lx-cascades',
+                    index: '5',
+                    title: '版本管理',
+                     subs: [
+                        {
+                            index: 'versions',
+                            title: '历史版本'
+                        },
+                        {
+                            index: 'depoly',
+                            title: '发布版本'
+                        },
+                        
+                    ]
+                },
             ]
         };
     },

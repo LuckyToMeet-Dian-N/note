@@ -33,3 +33,11 @@ export const deleteData = deleteData => {
         data: qs.stringify(deleteData)
     });
 };
+
+export const fetchConsoleData = query => {
+    return request({
+        url: 'api/admin/allInfo',
+        method: 'get',
+        params: query
+    });
+};

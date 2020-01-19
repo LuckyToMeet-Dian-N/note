@@ -31,30 +31,30 @@ public class AdminOrdersController {
     private UserInfoMapper userInfoMapper;
 
     @GetMapping("listOrders")
-    public ResultBean<List<OrdersVO>> select(@RequestParam(value = "userId",required = false)Integer userId,
+    public ResultBean<List<OrdersVO>> select(@RequestParam(value = "userId", required = false) Integer userId,
                                              @RequestParam(value = "payState") Integer payState) {
         List<Orders> orders;
         if (StringUtils.isEmpty(userId) && StringUtils.isEmpty(payState)) {
             orders = ordersMapper.selectAll();
-        }else{
+        } else {
             Orders orders1 = new Orders();
-            if (!StringUtils.isEmpty(userId)){
+            if (!StringUtils.isEmpty(userId)) {
                 orders1.setUserId(userId);
             }
-            if (!StringUtils.isEmpty(payState)){
+            if (!StringUtils.isEmpty(payState)) {
                 orders1.setPayState(payState);
             }
-            orders= ordersMapper.select(orders1);
+            orders = ordersMapper.select(orders1);
         }
         List<OrdersVO> list = new ArrayList<>();
-            orders.forEach(e -> {
-                OrdersVO ordersVO;
-                Users users = userInfoMapper.selectByPrimaryKey(e.getId());
-                ordersVO = new OrdersVO();
-                BeanUtils.copyProperties(e, ordersVO);
-                ordersVO.setUserName(users.getUserName());
-                list.add(ordersVO);
-            });
+        orders.forEach(e -> {
+            OrdersVO ordersVO;
+            Users users = userInfoMapper.selectByPrimaryKey(e.getId());
+            ordersVO = new OrdersVO();
+            BeanUtils.copyProperties(e, ordersVO);
+            ordersVO.setUserName(users.getUserName());
+            list.add(ordersVO);
+        });
 
         return new ResultBean<>(list);
     }
@@ -65,11 +65,11 @@ public class AdminOrdersController {
     }
 
     @PostMapping("updateOrders")
-    public ResultBean<Integer> update(OrdersVO ordersVO) {
-        System.out.println(ordersVO);
+    public ResultBean<Integer> updateOreder(OrdersVO ordersVO) {
         Orders orders = new Orders();
-        BeanUtils.copyProperties(ordersVO,orders);
-        return new ResultBean<>(ordersMapper.updateByPrimaryKeySelective(orders));
+        BeanUtils.copyProperties(ordersVO, orders);
+        ordersMapper.updateByPrimaryKeySelective(orders);
+        return new ResultBean<>();
     }
 
 

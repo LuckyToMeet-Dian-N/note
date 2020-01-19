@@ -1,6 +1,7 @@
 package com.gentle.controller.admin;
 
 import com.gentle.bean.po.Feedback;
+import com.gentle.bean.vo.FeedbackVO;
 import com.gentle.mapper.FeedbackMapper;
 import com.gentle.result.ResultBean;
 import com.gentle.service.FeedBackService;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author Gentle
@@ -34,9 +36,10 @@ public class AdminFeedBackController {
     }
 
     @GetMapping(value = "selectFeedBack")
-    public ResultBean<String> select(@RequestParam(value = "isReply",required = false) Boolean isReply) {
-
-        return new ResultBean<>();
+    public ResultBean<List<FeedbackVO>> select(@RequestParam(value = "isReply",required = false) Boolean isReply) {
+        System.out.println(isReply);
+        List<FeedbackVO> feedbackVOS = feedBackService.selectFeedBack(null, isReply);
+        return new ResultBean<>(feedbackVOS);
     }
 
 
