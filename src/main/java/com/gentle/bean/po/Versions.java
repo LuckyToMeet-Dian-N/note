@@ -3,6 +3,7 @@ package com.gentle.bean.po;
 import lombok.Data;
 
 import javax.persistence.Id;
+import java.util.Date;
 
 /**
  * @author Gentle
@@ -18,7 +19,7 @@ public class Versions {
 
     private String path;
 
-    private String createTime;
+    private Date createTime;
 
     private  Integer version;
 }

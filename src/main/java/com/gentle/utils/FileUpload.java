@@ -33,11 +33,10 @@ public class FileUpload {
 			}
 			copyFile(file.getInputStream(), filePath, (fileName+extName));
 
-			return filePath+"/"+(fileName+extName);
+			return (fileName+extName);
 		} catch (IOException e) {
-			System.out.println(e);
+			throw new CheckException("上传失败");
 		}
-		return null;
 	}
 
     /**
