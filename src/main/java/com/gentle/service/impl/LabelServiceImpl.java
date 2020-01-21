@@ -42,9 +42,6 @@ public class LabelServiceImpl implements LabelService {
         if (StringUtils.isEmpty(label.getId())){
             throw new CheckException("标签ID不能为空");
         }
-        if (StringUtils.isEmpty(label.getUsersId())){
-            throw new CheckException("标签用户不能为空");
-        }
         labelMapper.updateLabel(label);
         return "修改成功";
     }

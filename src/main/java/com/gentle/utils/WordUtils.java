@@ -1,14 +1,11 @@
 package com.gentle.utils;
 
 import com.gentle.exception.CheckException;
-import com.lowagie.text.*;
 import com.lowagie.text.Font;
+import com.lowagie.text.*;
 import com.lowagie.text.rtf.RtfWriter2;
-import com.lowagie.text.rtf.document.RtfDocument;
-import com.lowagie.text.rtf.text.RtfChunk;
 
 import java.awt.*;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
@@ -35,7 +32,6 @@ public class WordUtils {
             document.add(p);
             ph.setFont(f);
             Paragraph context = new Paragraph(content);
-
             //段间距
             context.setSpacingBefore(3);
             //设置第一行空的列数
@@ -52,17 +48,13 @@ public class WordUtils {
     }
 
     public static void main(String[] args) {
-//        contentToWord("gentle","123131","g:/word.docx");
-
         String path = "g:\\";
         String fileName = "word"+".docx";
         String filePath = path + fileName;
-
         //创建word
         WordUtils1.createWord(path,fileName);
 //        //写入数据
-        WordUtils1.writeDataDocx(filePath,"124124124125412",true,12);
-
+        WordUtils1.writeDataDocx(filePath,"124124124125412 \\n\n\n hsdhsdajasdjhajsdhasdjhasdjasdhjashsjhad",true,12);
         //读取数据
         String contentWord=WordUtils1.readDataDocx(filePath);
         System.out.println("word的内容为:\n"+contentWord);

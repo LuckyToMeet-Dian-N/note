@@ -41,7 +41,6 @@ public class VersionsController {
     @PostMapping(value = "deployVersions")
     @Transactional
     public ResultBean<String> uploadOralLanguage(@RequestParam("file") MultipartFile file, Versions versions){
-        System.out.println(versions);
         ValidataUtils.isNotNullByString(versions.getDescription(),"版本描述不能为空！");
         ValidataUtils.isNotNullByString(versions.getVersion(),"版本号不能为空！");
         String s = FileUpload.fileUp(file, FileConstants.DEFAULT_ROOT_PATH, UuidUtil.get32UUID());
