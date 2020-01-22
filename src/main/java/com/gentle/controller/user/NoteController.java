@@ -1,8 +1,10 @@
 package com.gentle.controller.user;
 
+import com.gentle.bean.po.LabelAndNote;
 import com.gentle.bean.po.Note;
 import com.gentle.bean.po.Users;
 import com.gentle.exception.CheckException;
+import com.gentle.mapper.LabelAndNoteMapper;
 import com.gentle.mapper.NoteMapper;
 import com.gentle.result.ResultBean;
 import com.gentle.service.NoteService;
@@ -23,11 +25,14 @@ import java.util.List;
  * @date 2019/09/18 : 18:39
  */
 @RestController
-@RequestMapping(value = "/users/")
+@RequestMapping(value = "/api/users/")
+@CrossOrigin("*")
 public class NoteController {
 
     @Resource
     NoteMapper noteMapper;
+    @Resource
+    LabelAndNoteMapper labelAndNoteMapper;
 
     @PostMapping(value = "createNote")
     public ResultBean<String> insertNote(Note note) {
@@ -46,7 +51,9 @@ public class NoteController {
     @PostMapping("deleteNote")
     public ResultBean<String> delete(Integer id) {
         noteMapper.deleteByPrimaryKey(id);
-
+        LabelAndNote labelAndNote = new LabelAndNote();
+        labelAndNote.setNoteId(id);
+        labelAndNoteMapper.delete(labelAndNote);
         return new ResultBean<>();
     }
 
@@ -63,7 +70,11 @@ public class NoteController {
     @GetMapping("selectNote")
     public ResultBean<List<Note>> select(@RequestParam(value = "noteType" ,required = false) Integer noteType) {
         List<Note> notes;
+        Users users  = (Users) RequestAndResponseUtils.getRequest().getAttribute("users");
+
         if (StringUtils.isEmpty(noteType)){
+            Note note = new Note();
+            note.setUsersId(users.getId());
             notes = noteMapper.selectAll();
         }else {
             Note note = new Note();
@@ -80,7 +91,7 @@ public class NoteController {
     /**
      * 笔记转邮件。
      */
-    @PostMapping()
+    @PostMapping("sendMail")
     public ResultBean<String> sendEmail(Integer noteId, String recAddr) {
 
         if (StringUtils.isEmpty(recAddr)) {
@@ -89,16 +100,14 @@ public class NoteController {
         if (!checkEmail(recAddr)) {
             throw new CheckException("邮箱格式不正确！");
         }
-
-        Note note = new Note();
-
+        Note note = noteMapper.selectByPrimaryKey(noteId);
+        ValidataUtils.isNotNull(note,"noteId 不存在");
         try {
             MailUtils.sendEmail(note.getNoteTitle(), note.getNoteContent(), recAddr);
         } catch (Exception e) {
             e.printStackTrace();
             throw new CheckException("发送失败，亲稍后重试");
         }
-
         return new ResultBean<>("发送成功！");
     }
 

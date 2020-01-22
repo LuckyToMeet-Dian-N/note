@@ -1,5 +1,6 @@
 package com.gentle.aop;
 
+import com.gentle.bean.po.Users;
 import com.gentle.exception.UnloginException;
 import com.gentle.utils.JsonUtil;
 import com.gentle.utils.RedisService;
@@ -21,10 +22,10 @@ import java.util.Map;
  * @Author: Gentle
  * @date 2018/12/08 16:35
  */
-//@Order(5)
-//@Slf4j
-//@Component
-//@Aspect
+@Order(5)
+@Slf4j
+@Component
+@Aspect
 public class AdminLoginAuthorization {
 
     public static Map<String,Object > map = new HashMap<>();
@@ -40,7 +41,6 @@ public class AdminLoginAuthorization {
         if (uuId == null || uuId.isEmpty()) {
             throw new UnloginException("没有登录");
         }
-
         if(map.get(uuId)==null){
             throw new UnloginException("没有登录");
         }

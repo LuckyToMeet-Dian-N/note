@@ -1,9 +1,14 @@
 package com.gentle.aop;
 
+import com.gentle.bean.po.Users;
 import com.gentle.exception.UnloginException;
 import com.gentle.utils.RequestAndResponseUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -14,10 +19,10 @@ import java.util.Map;
  * @Author: Gentle
  * @date 2018/8/18 23:53
  */
-//@Order(5)
-//@Slf4j
-//@Component
-//@Aspect
+@Order(4)
+@Slf4j
+@Component
+@Aspect
 public class LoginAuthorization {
 
     public static Map<String,Object > map = new HashMap<>();
@@ -28,17 +33,22 @@ public class LoginAuthorization {
 
     @Before("authorization()")
     public void handlerControllerMethod() throws Exception {
-
-        HttpServletRequest httpServletRequest = RequestAndResponseUtils.getRequest();
-        String uuId = httpServletRequest.getHeader("token");
-        if (uuId == null || uuId.isEmpty()) {
-            throw  new UnloginException("没有登录");
+        if (map.isEmpty()){
+            Users users = new Users();
+            users.setId(1);
+            map.put("1",users);
         }
+//        HttpServletRequest httpServletRequest = RequestAndResponseUtils.getRequest();
+//        String uuId = httpServletRequest.getHeader("token");
+//        if (uuId == null || uuId.isEmpty()) {
+//            throw  new UnloginException("没有登录");
+//        }
+//
+//        if (map.get(uuId) == null){
+//            throw  new UnloginException("非法登录");
+//        }
 
-        if (map.get(uuId) == null){
-            throw  new UnloginException("非法登录");
-        }
-
-        RequestAndResponseUtils.getRequest().setAttribute("users",map.get(uuId));
+//        RequestAndResponseUtils.getRequest().setAttribute("users",map.get(uuId));
+        RequestAndResponseUtils.getRequest().setAttribute("users",map.get("1"));
     }
 }

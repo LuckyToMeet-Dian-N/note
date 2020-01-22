@@ -5,10 +5,7 @@ import com.gentle.bean.po.Users;
 import com.gentle.mapper.CollectionMapper;
 import com.gentle.result.ResultBean;
 import com.gentle.utils.RequestAndResponseUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -20,12 +17,14 @@ import java.util.List;
  * 收藏类接口
  */
 @RestController
-@RequestMapping(value = "/users/")
+@RequestMapping(value = "/api/users/")
+@CrossOrigin("*")
+
 public class CollectionController {
     @Resource
     CollectionMapper collectionMapper;
 
-    @PostMapping()
+    @PostMapping("insertCollection")
     public ResultBean<String> insert(Integer noteId) {
       Users users  = (Users) RequestAndResponseUtils.getRequest().getAttribute("users");
         Collections collections = new Collections();
@@ -36,8 +35,8 @@ public class CollectionController {
         collectionMapper.insert(collections);
         return new ResultBean<>();
     }
-//
-    @PostMapping()
+
+    @PostMapping("deleteCollection")
     public ResultBean<String> delete(Integer id) {
         collectionMapper.deleteByPrimaryKey(id);
         return new ResultBean<>();

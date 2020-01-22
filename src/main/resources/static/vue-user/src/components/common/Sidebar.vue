@@ -64,64 +64,63 @@ export default {
                 {
                     icon: 'el-icon-lx-cascades',
                     index: '1',
-                    title: '用户管理',
+                    title: '标签管理',
                      subs: [
                         {
-                            index: 'users',
-                            title: '用户列表'
+                            index: 'label',
+                            title: '标签列表'
                         },
                     ]
                 },
                 {
                     icon: 'el-icon-lx-cascades',
                     index: '2',
-                    title: '订单管理',
+                    title: '记事管理',
                      subs: [
                         {
-                            index: 'orders',
-                            title: '订单列表'
+                            index: 'label',
+                            title: '记事列表'
+                        },
+                        {
+                            index: 'label',
+                            title: '快记'
                         },
                     ]
                 },
-                {
+                 {
                     icon: 'el-icon-lx-cascades',
                     index: '3',
-                    title: '反馈管理',
-                     subs: [
-                        {
-                            index: 'feedBack',
-                            title: '反馈列表'
-                        },
-                    ]
-                },
-                {
-                    icon: 'el-icon-lx-cascades',
-                    index: '4',
                     title: '分享管理',
                      subs: [
                         {
                             index: 'share',
                             title: '分享列表'
                         },
-                        
                     ]
                 },
                 {
                     icon: 'el-icon-lx-cascades',
-                    index: '5',
-                    title: '版本管理',
+                    index: '4',
+                    title: '收藏管理',
                      subs: [
                         {
-                            index: 'versions',
-                            title: '历史版本'
+                            index: 'share',
+                            title: '收藏列表'
                         },
-                        {
-                            index: 'depoly',
-                            title: '发布版本'
-                        },
-                        
                     ]
                 },
+                {
+                    icon: 'el-icon-lx-cascades',
+                    index: '4',
+                    title: '收藏管理',
+                     subs: [
+                        {
+                            index: 'share',
+                            title: '收藏列表'
+                        },
+                    ]
+                },
+               
             ]
         };
     },

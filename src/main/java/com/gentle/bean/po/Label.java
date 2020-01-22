@@ -18,5 +18,7 @@ public class Label {
 
     private Date updateTime;
 
+    private Integer usersId;
+
 
 }

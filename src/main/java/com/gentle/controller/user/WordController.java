@@ -8,9 +8,7 @@ import com.gentle.result.ResultBean;
 import com.gentle.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -24,6 +22,8 @@ import java.util.Objects;
  * @date 2019/09/28 : 10:38
  */
 @Controller
+@CrossOrigin("*")
+@RequestMapping(value = "/api/users/")
 public class WordController {
     @Resource
     NoteMapper  noteMapper;
@@ -59,7 +59,7 @@ public class WordController {
     /**
      * 笔记转word 并下载。
      */
-    @PostMapping("downloadNote")
+    @PostMapping("insertNoteByNote")
     public void noteToWord(String noteIds) {
         ValidataUtils.isNotNullByString(noteIds,"noteId 不能为空");
         noteIds = noteIds.trim();
