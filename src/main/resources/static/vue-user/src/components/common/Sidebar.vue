@@ -82,7 +82,7 @@ export default {
                             title: '记事列表'
                         },
                         {
-                            index: 'label',
+                            index: 'note',
                             title: '快记'
                         },
                     ]
@@ -104,22 +104,12 @@ export default {
                     title: '收藏管理',
                      subs: [
                         {
-                            index: 'share',
-                            title: '收藏列表'
+                            index: 'collections',
+                            title: '我的收藏'
                         },
                     ]
                 },
-                {
-                    icon: 'el-icon-lx-cascades',
-                    index: '4',
-                    title: '收藏管理',
-                     subs: [
-                        {
-                            index: 'share',
-                            title: '收藏列表'
-                        },
-                    ]
-                },
+               
                
             ]
         };

@@ -34,6 +34,21 @@ export default new Router({
                     component: () => import( '../components/page/Label.vue'),
                     meta: { title: '标签管理' }
                 },
+                {
+                    path: '/share',
+                    component: () => import( '../components/page/share.vue'),
+                    meta: { title: '分享管理' }
+                },
+                {
+                    path: '/collections',
+                    component: () => import( '../components/page/collections.vue'),
+                    meta: { title: '收藏管理' }
+                },
+                {
+                    path: '/note',
+                    component: () => import( '../components/page/note.vue'),
+                    meta: { title: '快记' }
+                },
             ]
         },
 

@@ -4,18 +4,22 @@ import lombok.Data;
 
 import javax.persistence.Id;
 import java.util.Date;
+
+/**
+ * @author Gentle
+ * @date 2020/01/24 : 17:14
+ */
 @Data
-public class Collections {
+public class Files {
     @Id
     private Integer id;
 
-    private Integer noteId;
+    private String noteList;
+
+    private String name;
 
     private Integer usersId;
 
     private Date createTime;
-
-    private Date updateTime;
-
 
 }
