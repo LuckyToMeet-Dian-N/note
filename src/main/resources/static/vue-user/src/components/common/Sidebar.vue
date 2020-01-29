@@ -59,7 +59,7 @@ export default {
                 {
                     icon: 'el-icon-lx-home',
                     index: 'dashboard',
-                    title: '系统首页'
+                    title: '新建文稿'
                 },
                 {
                     icon: 'el-icon-lx-cascades',

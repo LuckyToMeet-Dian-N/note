@@ -1,9 +1,11 @@
 package com.gentle.controller.user;
 
+import com.gentle.bean.po.Files;
 import com.gentle.bean.po.LabelAndNote;
 import com.gentle.bean.po.Note;
 import com.gentle.bean.po.Users;
 import com.gentle.exception.CheckException;
+import com.gentle.mapper.FilesMapper;
 import com.gentle.mapper.LabelAndNoteMapper;
 import com.gentle.mapper.NoteMapper;
 import com.gentle.result.ResultBean;
@@ -41,7 +43,6 @@ public class NoteController {
         ValidataUtils.isNotNull(note.getNoteType(),"笔记类型不能为空");
         note.setUpdateTime(new Date());
         Users users  = (Users) RequestAndResponseUtils.getRequest().getAttribute("users");
-
         note.setUsersId(users.getId());
         note.setCreateTime(new Date());
         noteMapper.insert(note);
@@ -56,14 +57,30 @@ public class NoteController {
         labelAndNoteMapper.delete(labelAndNote);
         return new ResultBean<>();
     }
+    @Resource
+    FilesMapper filesMapper;
 
     @PostMapping("updateNote")
     public ResultBean<String> update(Note note) {
-        ValidataUtils.isNotNullByString(note.getId(),"笔记 id 不能为空");
         ValidataUtils.isNotNullByString(note.getNoteTitle(),"笔记标题不能为空");
-        ValidataUtils.isNotNullByString(note.getNoteContent(),"笔记内容不能为空");
         ValidataUtils.isNotNull(note.getNoteType(),"笔记类型不能为空");
-        noteMapper.updateByPrimaryKeySelective(note);
+        if (!StringUtils.isEmpty(note.getId())){
+            noteMapper.updateByPrimaryKeySelective(note);
+        }else {
+            Users users  = (Users) RequestAndResponseUtils.getRequest().getAttribute("users");
+            note.setUsersId(users.getId());
+            note.setCreateTime(new Date());
+            note.setUpdateTime(new Date());
+            noteMapper.insertSelective(note);
+            Files files = new Files();
+            files.setUsersId(users.getId());
+            List<Files> select = filesMapper.select(files);
+            Files files2 = new Files();
+            files2.setId(select.get(0).getId());
+            files2.setNoteList(select.get(0).getNoteList()+","+note.getId());
+            filesMapper.updateByPrimaryKeySelective(files2);
+
+        }
         return new ResultBean<>();
     }
 

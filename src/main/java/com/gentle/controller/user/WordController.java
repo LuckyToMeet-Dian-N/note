@@ -1,8 +1,10 @@
 package com.gentle.controller.user;
 
+import com.gentle.bean.po.Files;
 import com.gentle.bean.po.Note;
 import com.gentle.bean.po.Users;
 import com.gentle.exception.CheckException;
+import com.gentle.mapper.FilesMapper;
 import com.gentle.mapper.NoteMapper;
 import com.gentle.result.ResultBean;
 import com.gentle.utils.*;
@@ -15,6 +17,7 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -27,11 +30,13 @@ import java.util.Objects;
 public class WordController {
     @Resource
     NoteMapper  noteMapper;
+    @Resource
+    FilesMapper filesMapper;
 
     /**
-     * 笔记转word 并下载。
+     * wrod 转笔记。
      */
-    @PostMapping("downloadNote")
+    @PostMapping("insertNoteByWord")
     @ResponseBody
     public ResultBean<String> workToNote(@RequestParam("file") MultipartFile file) {
         ValidataUtils.isNotNull(file,"上传文件不能为空");
@@ -51,6 +56,13 @@ public class WordController {
         note.setUsersId(users.getId());
         note.setUpdateTime(new Date());
         noteMapper.insert(note);
+        Files files = new Files();
+        files.setUsersId(users.getId());
+        List<Files> select = filesMapper.select(files);
+        Files files2 = new Files();
+        files2.setId(select.get(0).getId());
+        files2.setNoteList(select.get(0).getNoteList()+","+note.getId());
+        filesMapper.updateByPrimaryKeySelective(files2);
         return new ResultBean<>();
     }
 
@@ -59,7 +71,7 @@ public class WordController {
     /**
      * 笔记转word 并下载。
      */
-    @PostMapping("insertNoteByNote")
+    @PostMapping("downloadNote")
     public void noteToWord(String noteIds) {
         ValidataUtils.isNotNullByString(noteIds,"noteId 不能为空");
         noteIds = noteIds.trim();
