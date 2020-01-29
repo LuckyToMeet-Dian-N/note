@@ -7,10 +7,7 @@ import com.gentle.result.ResultBean;
 import com.gentle.utils.RequestAndResponseUtils;
 import com.gentle.utils.ValidataUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -27,21 +24,30 @@ public class UserInfoController {
     UserInfoMapper userInfoMapper;
 
     @PostMapping(value = "updatePassword")
-    public ResultBean<String> updatePassword(String password) {
-        ValidataUtils.isNotNullByString(password,"新密码不能为空");
+    public ResultBean<String> updatePassword(String newPassword) {
+        ValidataUtils.isNotNullByString(newPassword,"新密码不能为空");
         Users users  = (Users) RequestAndResponseUtils.getRequest().getAttribute("users");
-        if (users.getPassword().equals(password)){
+        if (users.getPassword().equals(newPassword)){
             throw new CheckException("密码不能和原来密码一致");
         }
-        users.setPassword(password);
-        userInfoMapper.updatePassword(password,users.getId());
+        users.setPassword(newPassword);
+        userInfoMapper.updatePassword(newPassword,users.getId());
         return new ResultBean<>();
     }
     @PostMapping(value = "updateUserInfo")
     public ResultBean<String> updateUserInfo(Users users) {
         ValidataUtils.isNotNullByString(users.getUserName(),"用户名不能为空");
-        int i = userInfoMapper.updateByPrimaryKeySelective(users);
+        ValidataUtils.isNotNull(users.getId(),"用户id不能为空");
+        ValidataUtils.isNotNull(users.getRegion(),"用户地区不能为空");
+         userInfoMapper.updateByPrimaryKeySelective(users);
         return new ResultBean<>();
+    }
+
+    @GetMapping(value = "getUserInfo")
+    public ResultBean<Users> getUserInfo() {
+        Users users  = (Users) RequestAndResponseUtils.getRequest().getAttribute("users");
+        users.setPassword(null);
+        return new ResultBean<>(users);
     }
 
 }

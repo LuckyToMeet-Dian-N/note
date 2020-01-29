@@ -30,7 +30,7 @@ import java.util.List;
 @CrossOrigin("*")
 public class ShareController {
 
-    @Autowired
+    @Resource
     ShareMapper shareMapper ;
     @Resource
     NoteMapper noteMapper;
@@ -87,7 +87,9 @@ public class ShareController {
     }
 
     private void getSelect(List<ShareVO> shareVOS, Share share, ShareVO shareVO, Note note) {
+
         BeanUtils.copyProperties(note, shareVO);
+        shareVO.setId(share.getId());
         shareVO.setNoteId(note.getId());
         Users users = userInfoMapper.selectByPrimaryKey(share.getUserId());
         shareVO.setUserName(users.getUserName());

@@ -1,13 +1,8 @@
 package com.gentle.controller.user;
 
-import com.gentle.bean.po.Files;
-import com.gentle.bean.po.LabelAndNote;
-import com.gentle.bean.po.Note;
-import com.gentle.bean.po.Users;
+import com.gentle.bean.po.*;
 import com.gentle.exception.CheckException;
-import com.gentle.mapper.FilesMapper;
-import com.gentle.mapper.LabelAndNoteMapper;
-import com.gentle.mapper.NoteMapper;
+import com.gentle.mapper.*;
 import com.gentle.result.ResultBean;
 import com.gentle.service.NoteService;
 import com.gentle.utils.*;
@@ -55,15 +50,25 @@ public class NoteController {
         filesMapper.updateByPrimaryKeySelective(files2);
         return new ResultBean<>();
     }
+        @Resource
+        CollectionMapper collectionMapper;
+        @Resource
+        ShareMapper shareMapper;
+        @PostMapping("deleteNote")
+        public ResultBean<String> delete(Integer id) {
 
-    @PostMapping("deleteNote")
-    public ResultBean<String> delete(Integer id) {
-        noteMapper.deleteByPrimaryKey(id);
-        LabelAndNote labelAndNote = new LabelAndNote();
-        labelAndNote.setNoteId(id);
-        labelAndNoteMapper.delete(labelAndNote);
-        return new ResultBean<>();
-    }
+            noteMapper.deleteByPrimaryKey(id);
+            LabelAndNote labelAndNote = new LabelAndNote();
+            labelAndNote.setNoteId(id);
+            labelAndNoteMapper.delete(labelAndNote);
+            Collections collections = new Collections();
+            collections.setNoteId(id);
+            collectionMapper.delete(collections);
+            Share share = new Share();
+            share.setNoteId(id);
+            shareMapper.delete(share);
+            return new ResultBean<>();
+        }
     @Resource
     FilesMapper filesMapper;
 

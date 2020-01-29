@@ -15,10 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.File;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @author Gentle
@@ -71,22 +68,30 @@ public class WordController {
     /**
      * 笔记转word 并下载。
      */
-    @PostMapping("downloadNote")
+    @GetMapping("downloadNote")
     public void noteToWord(String noteIds) {
         ValidataUtils.isNotNullByString(noteIds,"noteId 不能为空");
         noteIds = noteIds.trim();
         String[] split = noteIds.split(",");
+        for (String string:split){
+            Note note = noteMapper.selectByPrimaryKey(Integer.valueOf(string));
+            ValidataUtils.isNotNull(note,"noteId 不存在");
+            if (!note.getNoteType().equals(0)){
+                throw new CheckException("不能导出图片或视频笔记");
+            }
+        }
         StringBuilder stringBuilder = new StringBuilder();
         Arrays.stream(split).forEach(sss->{
             Note note = noteMapper.selectByPrimaryKey(sss);
             stringBuilder.append(note.getNoteContent());
             stringBuilder.append("\r\r\r");
         });
-        Note note = new Note();
-        String path = "/home/test/" + note.getId() + ".docx";
-        WordUtils.contentToWord(note.getNoteTitle(), stringBuilder.toString(), path);
+        String uuid = UUID.randomUUID().toString();
+        String path = "/home/test/" + uuid + ".docx";
+        WordUtils1.createWord("/home/test/",uuid + ".docx");
+        WordUtils1.writeDataDocx(path,stringBuilder.toString(),false,13);
         try {
-            FileDownload.fileDownload(RequestAndResponseUtils.getResponse(), path, note.getId() + ".docx");
+            FileDownload.fileDownload(RequestAndResponseUtils.getResponse(), "/home/test/", uuid + ".docx");
         } catch (Exception e) {
             e.printStackTrace();
         }
