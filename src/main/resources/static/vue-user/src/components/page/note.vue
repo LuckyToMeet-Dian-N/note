@@ -42,7 +42,8 @@
                                         <el-dropdown @command="handleNoteCommand">
                                                 <i  class="el-icon-circle-plus-outline"></i>
                                                <el-dropdown-menu slot="dropdown">
-                                                    <el-dropdown-item :command="test">删除</el-dropdown-item>
+                                                    <el-dropdown-item :command="getCommonandByNote(1,test)">分享</el-dropdown-item>
+                                                    <el-dropdown-item :command="getCommonandByNote(2,test)">删除</el-dropdown-item>
                                               </el-dropdown-menu> 
                                           </el-dropdown>
                                           </span>
@@ -60,7 +61,7 @@
                 <i v-if="noteForm.noteType==0">
                 <quill-editor ref="myTextEditor" v-model="noteForm.noteContent" :options="editorOption"></quill-editor>
                 <br>
-                <el-button class="editor-btn" type="primary" @click="sumbitNoteData">提交</el-button>
+                <el-button class="editor-btn" type="primary" @click="chooiseSaveFolder= true">提交</el-button>
                  </i>
                  <i v-if="noteForm.noteType==1">
                      <img :src="noteForm.filePath" />
@@ -181,6 +182,26 @@
                  <el-button @click="updateFolderDialog = false">关 闭</el-button>
             </span> 
              </el-form>
+        </el-dialog>  
+
+        <el-dialog title="选择保存位置" :visible.sync="chooiseSaveFolder" width="30%">
+            <el-form :model="noteForm">
+                <el-form-item label="保存文件夹">
+                    <el-select v-model="noteForm.fileId" placeholder="请选择">
+                        <el-option
+                          v-for="item in tableData"
+                          :key="item.id"
+                          :label="item.name"
+                          :value="item.id">{{item.name}}
+                        </el-option>
+                      </el-select>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="sumbitNoteData">确定</el-button>
+                 <el-button @click="chooiseSaveFolder = false">关 闭</el-button>
+            </span> 
+             </el-form>
         </el-dialog>   
     </div>
 </template>
@@ -196,6 +217,7 @@ import { deleteData } from '../../api/note';
 import { addData } from '../../api/note';
 import { deleteNote } from '../../api/note';
 import { updateNote } from '../../api/note';
+import { insertData } from '../../api/share';
 
 export default {
     name: 'basetable',
@@ -227,11 +249,13 @@ export default {
             uploadImagesDialog: false,
             uploadWordDialog: false,
             createFolderDialog: false,
+            chooiseSaveFolder: false,
             pageTotal: 0,
             noteForm:{
                 noteTitle: '',
                 noteContent: '',
                 noteType: '',
+                name: '',
             },
             payName: '',
             updateForm:{},
@@ -264,6 +288,8 @@ export default {
         },
         addNote(){
             var forms = this.noteForm;
+            forms.noteContent =''
+            forms.noteTitle =''
             forms.noteType= 0;
         },
         handleSearch(){
@@ -432,8 +458,41 @@ export default {
                     }
                 });
         },
+        getCommonandByNote(index,note){
+            let param = {
+                'index' :index,
+                'note': note
+            }
+            return param;
+        },
         handleNoteCommand(command){
-            this.removeNote(command)
+             switch (command.index) {
+                  case 1:
+                  　　// 设备订单
+                  　　this.shareNote(command.note)
+                   　　break;
+                   case 2:
+                        this.removeNote(command.note)               　　
+                   　　break;
+                 }
+        },
+        //分享笔记
+        shareNote(row){
+            let a= {
+                noteId: row.id
+            }
+            this.$confirm('确定要分享吗？', '提示', {
+                type: 'warning'
+            })
+            .then(() => {
+                insertData(a).then(res => {
+                        if (res.code !=0) {
+                             this.$message.error(res.msg);
+                        }else{
+                           this.$message.success(res.msg);
+                    }
+                }); 
+            }).catch(() => {});   
         },
         //删除笔记
         removeNote(row){
@@ -465,7 +524,11 @@ export default {
                 this.$message.error('标题不能为空');
                 return false;
             }
-                
+            if (forms.fileId=='') {
+                this.$message.error('文件保存位置不能为空');
+                return false;
+            }
+
             updateNote(forms).then(res => {
                         if (res.code !=0) {
                              this.$message.error(res.msg);
@@ -473,6 +536,7 @@ export default {
                            this.$message.success(res.msg);
                             this.noteForm.noteType = 0
                            this.getData();
+                           this.chooiseSaveFolder= false
                     }
                 }); 
         }

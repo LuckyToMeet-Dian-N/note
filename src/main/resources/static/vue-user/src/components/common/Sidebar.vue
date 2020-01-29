@@ -75,15 +75,11 @@ export default {
                 {
                     icon: 'el-icon-lx-cascades',
                     index: '2',
-                    title: '记事管理',
+                    title: '文件夹管理',
                      subs: [
                         {
-                            index: 'label',
-                            title: '记事列表'
-                        },
-                        {
                             index: 'note',
-                            title: '快记'
+                            title: '我的资源'
                         },
                     ]
                 },

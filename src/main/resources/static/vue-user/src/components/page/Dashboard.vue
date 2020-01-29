@@ -10,6 +10,7 @@
                         <br>
                          
             </el-form>
+           
     </div>
 </template>
 
@@ -19,6 +20,7 @@ import 'quill/dist/quill.snow.css';
 import 'quill/dist/quill.bubble.css';
 import { quillEditor } from 'vue-quill-editor';
 import { createNote } from '../../api/note';
+import { fetchData } from '../../api/note';
 
 export default {
     name: 'dashboard',
@@ -29,9 +31,11 @@ export default {
                 noteContent: '',
                 noteType: 0,
             },
+            chooiseSaveFolder: false,
             editorOption: {
                 placeholder: 'Hello World'
-            }
+            },
+            tableData: []
         };
     },
     components: {
@@ -40,7 +44,16 @@ export default {
     computed: {
         
     },
+    created() {
+        this.getData();
+    },
     methods: {
+        // 获取 easy-mock 的模拟数据
+        getData() {
+            fetchData(this.query).then(res => {
+                this.tableData = res.data;
+            });
+        },
          onEditorChange({ editor, html, text }) {
                 this.content = html;
             },
@@ -62,6 +75,8 @@ export default {
                         }else{
                            this.$message.success(res.msg);
                             this.noteForm.noteType=0
+                            this.noteForm.noteTitle =''
+                            this.noteForm.noteContent= ''
                         }
             });
            

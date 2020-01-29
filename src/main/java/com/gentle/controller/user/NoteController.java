@@ -46,6 +46,13 @@ public class NoteController {
         note.setUsersId(users.getId());
         note.setCreateTime(new Date());
         noteMapper.insert(note);
+        Files files = new Files();
+        files.setUsersId(users.getId());
+        List<Files> select = filesMapper.select(files);
+        Files files2 = new Files();
+        files2.setId(select.get(0).getId());
+        files2.setNoteList(select.get(0).getNoteList()+","+note.getId());
+        filesMapper.updateByPrimaryKeySelective(files2);
         return new ResultBean<>();
     }
 
@@ -61,9 +68,10 @@ public class NoteController {
     FilesMapper filesMapper;
 
     @PostMapping("updateNote")
-    public ResultBean<String> update(Note note) {
+    public ResultBean<String> update(Note note,Integer fileId) {
         ValidataUtils.isNotNullByString(note.getNoteTitle(),"笔记标题不能为空");
         ValidataUtils.isNotNull(note.getNoteType(),"笔记类型不能为空");
+        ValidataUtils.isNotNull(fileId,"保存文稿位置不能为空");
         if (!StringUtils.isEmpty(note.getId())){
             noteMapper.updateByPrimaryKeySelective(note);
         }else {
@@ -72,14 +80,15 @@ public class NoteController {
             note.setCreateTime(new Date());
             note.setUpdateTime(new Date());
             noteMapper.insertSelective(note);
-            Files files = new Files();
-            files.setUsersId(users.getId());
-            List<Files> select = filesMapper.select(files);
+            Files files1 = filesMapper.selectByPrimaryKey(fileId);
             Files files2 = new Files();
-            files2.setId(select.get(0).getId());
-            files2.setNoteList(select.get(0).getNoteList()+","+note.getId());
+            files2.setId(files1.getId());
+            if (StringUtils.isEmpty(files1.getNoteList())){
+                files2.setNoteList(note.getId()+"");
+            }else {
+                files2.setNoteList(files1.getNoteList()+","+note.getId());
+            }
             filesMapper.updateByPrimaryKeySelective(files2);
-
         }
         return new ResultBean<>();
     }

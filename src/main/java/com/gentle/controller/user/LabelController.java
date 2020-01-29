@@ -60,7 +60,7 @@ public class LabelController {
     @PostMapping("updateLabel")
     public ResultBean<String> update(Label label) {
         Users users = (Users) RequestAndResponseUtils.getRequest().getAttribute("users");
-        label.setId(users.getId());
+        label.setUsersId(users.getId());
         labelMapper.updateByPrimaryKeySelective(label);
         return new ResultBean<>();
     }
