@@ -105,7 +105,10 @@
                 <el-form-item label="分享内容">
                     <div>
                         <i v-if="form.noteType == 0">
-                            <textarea style="width: 100%;height:300px" :disabled="true">{{form.noteContent}}</textarea>
+                            <!-- <textarea style="width: 100%;height:300px" :disabled="true">{{form.noteContent}}</textarea> -->
+                            <div style="width: 100%" v-html="form.noteContent">
+                                
+                            </div>
                          </i>                        
                         <i v-if="form.noteType == 1"> 
                             <textarea v-if="form.noteContent!=''" :disabled="true" style="width: 100%;height:300px">{{form.noteContent}}</textarea>

@@ -13,12 +13,9 @@
                订单状态：&nbsp;
                 <el-select v-model="query.payName" placeholder="请选择">
                     <el-option label="待支付" value="0" @click.native="selectState(0,'待支付')"></el-option>
-                   <el-option label="取消订单" value="1" @click.native="selectState(1,'取消订单')" ></el-option>
-                  
-                   <el-option label="已支付" value="2" @click.native="selectState(2,'已支付')" ></el-option>
-                  
-                   <el-option label="已退款" value="3" @click.native="selectState(3,'已退款')" ></el-option>
-                   <el-option label="订单超时" value="4" @click.native="selectState(4,'订单超时')" ></el-option>
+                   <el-option label="已支付" value="1" @click.native="selectState(1,'已支付')" ></el-option>
+                   <el-option label="取消订单" value="2" @click.native="selectState(2,'取消订单')" ></el-option>
+                   <el-option label="订单超时" value="3" @click.native="selectState(3,'订单超时')" ></el-option>
                   </el-select>
                   &nbsp;&nbsp;
                 <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
