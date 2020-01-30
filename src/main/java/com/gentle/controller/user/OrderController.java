@@ -66,6 +66,11 @@ public class OrderController {
         if (!(users1.getBalances()-10>=0)){
             throw new CheckException("余额不足，请先充值");
         }
+        Users users2 = new Users();
+        users2.setId(users.getId());
+        users2.setUserType(1);
+        userInfoMapper.updateByPrimaryKeySelective(users2);
+
         orders.setId(orders1.getId());
         orders.setPayState(10);
         orders.setPayState(1);
@@ -73,25 +78,24 @@ public class OrderController {
         return new ResultBean<>("支付成功");
     }
 
-
-    @PostMapping(value = "moneyBack")
-    public ResultBean<String> moneyBack(String orderNumber) {
-        Orders orders = new Orders();
-        orders.setOrderNumber(orderNumber);
-        Orders orders1 = ordersMapper.selectOne(orders);
-        if (orders1==null){
-            throw new CheckException("订单号不存在");
-        }
-        Users users  = (Users) RequestAndResponseUtils.getRequest().getAttribute("users");
-
-        Users users1 = userInfoMapper.selectByPrimaryKey(users.getId());
-        Users users2 = new Users();
-        users.setId(users.getId());
-        users.setBalances(users1.getBalances()+10);
-        userInfoMapper.updateByPrimaryKeySelective(users2);
-        orders.setId(orders1.getId());
-        orders.setPayState(3);
-        ordersMapper.updateByPrimaryKeySelective(orders);
-        return new ResultBean<>("支付成功");
-    }
+//    @PostMapping(value = "moneyBack")
+//    public ResultBean<String> moneyBack(String orderNumber) {
+//        Orders orders = new Orders();
+//        orders.setOrderNumber(orderNumber);
+//        Orders orders1 = ordersMapper.selectOne(orders);
+//        if (orders1==null){
+//            throw new CheckException("订单号不存在");
+//        }
+//        Users users  = (Users) RequestAndResponseUtils.getRequest().getAttribute("users");
+//
+//        Users users1 = userInfoMapper.selectByPrimaryKey(users.getId());
+//        Users users2 = new Users();
+//        users.setId(users.getId());
+//        users.setBalances(users1.getBalances()+10);
+//        userInfoMapper.updateByPrimaryKeySelective(users2);
+//        orders.setId(orders1.getId());
+//        orders.setPayState(3);
+//        ordersMapper.updateByPrimaryKeySelective(orders);
+//        return new ResultBean<>("支付成功");
+//    }
 }
