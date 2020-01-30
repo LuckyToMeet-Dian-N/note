@@ -49,8 +49,9 @@ public class UserInfoController {
     @GetMapping(value = "getUserInfo")
     public ResultBean<Users> getUserInfo() {
         Users users  = (Users) RequestAndResponseUtils.getRequest().getAttribute("users");
-        users.setPassword(null);
-        return new ResultBean<>(users);
+        Users users1 = userInfoMapper.selectByPrimaryKey(users.getId());
+        users1.setPassword(null);
+        return new ResultBean<>(users1);
     }
 
 }

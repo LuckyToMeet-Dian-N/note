@@ -38,7 +38,10 @@ public class FeedBackController {
 
     @GetMapping(value = "selectMyMessage")
     public ResultBean<List<Feedback>> selectMyMessage() {
-        List<Feedback> list = feedbackMapper.selectAll();
+        Users users  = (Users) RequestAndResponseUtils.getRequest().getAttribute("users");
+        Feedback feedback =new Feedback() ;
+        feedback.setUserId(users.getId());
+        List<Feedback> list = feedbackMapper.select(feedback);
         return new ResultBean<>(list);
     }
 

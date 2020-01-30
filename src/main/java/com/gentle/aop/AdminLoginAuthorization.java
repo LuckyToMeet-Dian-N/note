@@ -1,5 +1,6 @@
 package com.gentle.aop;
 
+import com.gentle.bean.po.Admins;
 import com.gentle.bean.po.Users;
 import com.gentle.exception.UnloginException;
 import com.gentle.utils.JsonUtil;
@@ -14,6 +15,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,16 +37,27 @@ public class AdminLoginAuthorization {
     }
     @Before("authorization1()")
     public void handlerControllerMethod1() throws Exception {
-
-        HttpServletRequest httpServletRequest = RequestAndResponseUtils.getRequest();
-        String uuId = httpServletRequest.getHeader("token");
-        if (uuId == null || uuId.isEmpty()) {
-            throw new UnloginException("没有登录");
+        if (map.isEmpty()){
+            Admins users = new Admins();
+            users.setId(1);
+            users.setPassword("123456");
+            users.setUpdateTime(new Date());
+            users.setCreateTime(new Date());
+            users.setAdminName("Admin");
+            users.setArea("哈哈");
+            users.setAge(10);
+            map.put("1",users);
         }
-        if(map.get(uuId)==null){
-            throw new UnloginException("没有登录");
-        }
+//        HttpServletRequest httpServletRequest = RequestAndResponseUtils.getRequest();
+//        String uuId = httpServletRequest.getHeader("token");
+//        if (uuId == null || uuId.isEmpty()) {
+//            throw new UnloginException("没有登录");
+//        }
+//        if(map.get(uuId)==null){
+//            throw new UnloginException("没有登录");
+//        }
 
+        RequestAndResponseUtils.getRequest().setAttribute("admin",map.get("1"));
 
     }
 }

@@ -22,6 +22,12 @@ public class Admins {
 
     private Date updateTime;
 
+    private String account;
+
+    private Integer age;
+
+    private String area;
+
 
 
 }
