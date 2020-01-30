@@ -1,5 +1,6 @@
 package com.gentle.controller.user;
 
+import com.gentle.aop.LoginAuthorization;
 import com.gentle.bean.po.Users;
 import com.gentle.exception.CheckException;
 import com.gentle.mapper.UserInfoMapper;
@@ -40,6 +41,8 @@ public class UserInfoController {
         ValidataUtils.isNotNull(users.getId(),"用户id不能为空");
         ValidataUtils.isNotNull(users.getRegion(),"用户地区不能为空");
          userInfoMapper.updateByPrimaryKeySelective(users);
+        Users users1 = userInfoMapper.selectByPrimaryKey(users.getId());
+        LoginAuthorization.map.put(users1.getId()+"",users1);
         return new ResultBean<>();
     }
 

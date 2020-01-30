@@ -105,6 +105,17 @@ export default {
                         },
                     ]
                 },
+                {
+                    icon: 'el-icon-lx-cascades',
+                    index: '5',
+                    title: '个人信息管理',
+                     subs: [
+                        {
+                            index: 'userInfo',
+                            title: '我的信息'
+                        },
+                    ]
+                },
                
                
             ]

@@ -49,6 +49,11 @@ export default new Router({
                     component: () => import( '../components/page/note.vue'),
                     meta: { title: '快记' }
                 },
+                {
+                    path: '/userInfo',
+                    component: () => import( '../components/page/userInfo.vue'),
+                    meta: { title: '个人信息' }
+                },
             ]
         },
 

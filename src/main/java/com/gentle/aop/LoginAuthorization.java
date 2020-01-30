@@ -11,6 +11,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,6 +37,15 @@ public class LoginAuthorization {
         if (map.isEmpty()){
             Users users = new Users();
             users.setId(1);
+            users.setPassword("123456");
+            users.setBalances(0);
+            users.setUpdateTime(new Date());
+            users.setCreateTime(new Date());
+            users.setRegion("哈哈");
+            users.setAge(10);
+            users.setEmail("hahah@qq.com");
+            users.setUserType(0);
+            users.setUserName("Gentle");
             map.put("1",users);
         }
 //        HttpServletRequest httpServletRequest = RequestAndResponseUtils.getRequest();

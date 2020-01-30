@@ -154,7 +154,10 @@
                 <el-form-item label="分享内容">
                     <div>
                         <i v-if="form.noteType == 0">
-                            <textarea style="width: 100%;height:300px" :disabled="true">{{form.noteContent}}</textarea>
+                           <!--  <textarea style="width: 100%;height:300px" :disabled="true">{{form.noteContent}}</textarea> -->
+                         
+                             <p v-html='form.noteContent'></p>
+                           
                          </i>                        
                         <i v-if="form.noteType == 1"> 
                             <textarea v-if="form.noteContent!=''" :disabled="true" style="width: 100%;height:300px">{{form.noteContent}}</textarea>
@@ -251,7 +254,7 @@ export default {
             })
                 .then(() => {
                     let a= {
-                        noteId: row.id
+                        noteId: row.noteId
                     }            
                     addDataByCollection(a).then(res => {
                             if (res.code !=0) {
