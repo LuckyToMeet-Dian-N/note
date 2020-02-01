@@ -34,31 +34,31 @@ public class LoginAuthorization {
 
     @Before("authorization()")
     public void handlerControllerMethod() throws Exception {
-        if (map.isEmpty()){
-            Users users = new Users();
-            users.setId(1);
-            users.setPassword("123456");
-            users.setBalances(0);
-            users.setUpdateTime(new Date());
-            users.setCreateTime(new Date());
-            users.setRegion("哈哈");
-            users.setAge(10);
-            users.setEmail("hahah@qq.com");
-            users.setUserType(0);
-            users.setUserName("Gentle");
-            map.put("1",users);
+//        if (map.isEmpty()){
+//            Users users = new Users();
+//            users.setId(1);
+//            users.setPassword("123456");
+//            users.setBalances(0);
+//            users.setUpdateTime(new Date());
+//            users.setCreateTime(new Date());
+//            users.setRegion("哈哈");
+//            users.setAge(10);
+//            users.setEmail("hahah@qq.com");
+//            users.setUserType(0);
+//            users.setUserName("Gentle");
+//            map.put("1",users);
+//        }
+        HttpServletRequest httpServletRequest = RequestAndResponseUtils.getRequest();
+        String uuId = httpServletRequest.getHeader("token");
+        if (uuId == null || uuId.isEmpty()) {
+            throw  new UnloginException("没有登录");
         }
-//        HttpServletRequest httpServletRequest = RequestAndResponseUtils.getRequest();
-//        String uuId = httpServletRequest.getHeader("token");
-//        if (uuId == null || uuId.isEmpty()) {
-//            throw  new UnloginException("没有登录");
-//        }
-//
-//        if (map.get(uuId) == null){
-//            throw  new UnloginException("非法登录");
-//        }
 
-//        RequestAndResponseUtils.getRequest().setAttribute("users",map.get(uuId));
-        RequestAndResponseUtils.getRequest().setAttribute("users",map.get("1"));
+        if (map.get(uuId) == null){
+            throw  new UnloginException("非法登录");
+        }
+
+        RequestAndResponseUtils.getRequest().setAttribute("users",map.get(uuId));
+//        RequestAndResponseUtils.getRequest().setAttribute("users",map.get("1"));
     }
 }

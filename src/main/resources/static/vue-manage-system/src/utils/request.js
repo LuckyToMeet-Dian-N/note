@@ -9,10 +9,13 @@ const service = axios.create({
 
 service.interceptors.request.use(
     config => {
+        let token = localStorage.getItem('ms_username');
+        if (token!='') {
+            config.headers.token = `${token}`
+        }
         return config;
     },
     error => {
-        console.log(error);
         return Promise.reject();
     }
 );

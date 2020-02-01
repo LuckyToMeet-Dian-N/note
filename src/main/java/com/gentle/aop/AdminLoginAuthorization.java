@@ -37,27 +37,16 @@ public class AdminLoginAuthorization {
     }
     @Before("authorization1()")
     public void handlerControllerMethod1() throws Exception {
-        if (map.isEmpty()){
-            Admins users = new Admins();
-            users.setId(1);
-            users.setPassword("123456");
-            users.setUpdateTime(new Date());
-            users.setCreateTime(new Date());
-            users.setAdminName("Admin");
-            users.setArea("哈哈");
-            users.setAge(10);
-            map.put("1",users);
+        HttpServletRequest httpServletRequest = RequestAndResponseUtils.getRequest();
+        String uuId = httpServletRequest.getHeader("token");
+        if (uuId == null || uuId.isEmpty()) {
+            throw new UnloginException("没有登录");
         }
-//        HttpServletRequest httpServletRequest = RequestAndResponseUtils.getRequest();
-//        String uuId = httpServletRequest.getHeader("token");
-//        if (uuId == null || uuId.isEmpty()) {
-//            throw new UnloginException("没有登录");
-//        }
-//        if(map.get(uuId)==null){
-//            throw new UnloginException("没有登录");
-//        }
+        if(map.get(uuId)==null){
+            throw new UnloginException("没有登录");
+        }
 
-        RequestAndResponseUtils.getRequest().setAttribute("admin",map.get("1"));
+        RequestAndResponseUtils.getRequest().setAttribute("admin",map.get(uuId));
 
     }
 }
