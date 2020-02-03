@@ -26,4 +26,7 @@ public class Users {
     private Integer userType;
 
     private Integer balances;
+
+    private String  securityCode;
+
 }
