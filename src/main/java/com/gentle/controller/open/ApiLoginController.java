@@ -42,7 +42,7 @@ public class ApiLoginController {
         return new ResultBean<>(openService.adminLogin(number, pwd));
     }
 
-    @GetMapping (value = "/users/register")
+    @PostMapping (value = "/users/register")
     public ResultBean<String> register(Users users) {
         ValidataUtils.isNotNullByString(users.getEmail(),"邮箱不能为空");
         if (StringUtils.isEmpty(users.getPassword())) {
@@ -51,9 +51,9 @@ public class ApiLoginController {
         if (StringUtils.isEmpty(users.getUserName())){
             throw new CheckException("用户名不能为空");
         }
-        ValidataUtils.isNotNullByString(users.getSecurityCode(),"安全码不能为空");
+        ValidataUtils.isNotNullByString(users.getSecurity(),"安全码不能为空");
         Users users1 = new Users();
-        users.setEmail(users.getEmail());
+        users1.setEmail(users.getEmail());
         Users select = userInfoMapper.selectOne(users1);
         if (select!=null){
             throw new CheckException("邮箱已存在，请更换重试");
@@ -65,9 +65,9 @@ public class ApiLoginController {
         userInfoMapper.insertSelective(users);
         return new ResultBean<>();
     }
-    @GetMapping(value = "/users/findPassword")
+    @PostMapping(value = "/users/findPassword")
     public ResultBean<String> findPassword(@RequestParam(value = "email") String number,
-                                         @RequestParam(value = "securityCode") String securityCode,String password) {
+                                         @RequestParam(value = "security") String securityCode,String password) {
         ValidataUtils.isNotNullByString(securityCode,"安全码不能为空");
         ValidataUtils.isNotNullByString(number,"安全码不能为空");
         ValidataUtils.isNotNullByString(password,"新密码不能为空");
@@ -76,7 +76,7 @@ public class ApiLoginController {
         Users users1 = userInfoMapper.selectOne(users);
         System.out.println(users1);
         ValidataUtils.isNotNull(users1,"邮箱不存在");
-        if (!users1.getSecurityCode().equals(securityCode)){
+        if (!users1.getSecurity().equals(securityCode)){
             throw new CheckException("安全码不正确");
         }
         users.setId(users1.getId());
