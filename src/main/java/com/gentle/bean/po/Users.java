@@ -2,6 +2,7 @@ package com.gentle.bean.po;
 
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.Id;
 import java.util.Date;
 @Data
@@ -27,6 +28,6 @@ public class Users {
 
     private Integer balances;
 
-    private String  securityCode;
+    private String  security;
 
 }

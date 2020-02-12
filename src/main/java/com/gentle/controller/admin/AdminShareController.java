@@ -63,6 +63,7 @@ public class AdminShareController {
     private void getSelect(List<ShareVO> shareVOS, Share share, ShareVO shareVO, Note note) {
         BeanUtils.copyProperties(note, shareVO);
         shareVO.setNoteId(note.getId());
+        shareVO.setId(share.getId());
         Users users = userInfoMapper.selectByPrimaryKey(share.getUserId());
         shareVO.setUserName(users.getUserName());
         shareVO.setUserId(users.getId());
