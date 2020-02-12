@@ -23,7 +23,8 @@ src\main\resources\static/vue-manage-system/dist/**
 src\main\resources\static/vue-manage-system/node_modules/**
 src\main\resources\static/vue-user/dist/**
 src\main\resources\static/vue-user/node_modules/**
-
+src\main\resources\static/\ddBuy/dist/**
+src\main\resources\static/\ddBuy/node_modules/**
 
 
 ### NetBeans ###
