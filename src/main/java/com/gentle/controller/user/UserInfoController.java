@@ -25,9 +25,12 @@ public class UserInfoController {
     UserInfoMapper userInfoMapper;
 
     @PostMapping(value = "updatePassword")
-    public ResultBean<String> updatePassword(String newPassword) {
+    public ResultBean<String> updatePassword(String password,String newPassword) {
         ValidataUtils.isNotNullByString(newPassword,"新密码不能为空");
         Users users  = (Users) RequestAndResponseUtils.getRequest().getAttribute("users");
+        if (!password.equals(users.getPassword())){
+            throw new CheckException("旧密码不正确");
+        }
         if (users.getPassword().equals(newPassword)){
             throw new CheckException("密码不能和原来密码一致");
         }

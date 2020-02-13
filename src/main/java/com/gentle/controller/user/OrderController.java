@@ -37,7 +37,7 @@ public class OrderController {
         orders.setOrderNumber(uuid);
         orders.setPayState(0);
         int i = ordersMapper.insertSelective(orders);
-        return new ResultBean<>("创建订单成功");
+        return new ResultBean<>(uuid);
     }
 
 
@@ -69,6 +69,7 @@ public class OrderController {
         Users users2 = new Users();
         users2.setId(users.getId());
         users2.setUserType(1);
+        users2.setBalances(users1.getBalances()-10);
         userInfoMapper.updateByPrimaryKeySelective(users2);
 
         orders.setId(orders1.getId());
