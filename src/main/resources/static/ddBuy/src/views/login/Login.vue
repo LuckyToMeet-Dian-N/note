@@ -168,7 +168,7 @@ export default {
                           });
                           resg.data.token = true;
                           localStorage.setItem('userInfo',JSON.stringify(resg.data))
-                          this.$router.back()
+                          this.$router.push('home')
                         }else{
                           Toast({
                               message: this.$t(resg.msg),

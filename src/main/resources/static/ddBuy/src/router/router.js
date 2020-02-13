@@ -68,6 +68,36 @@ const router = new Router({
             component: () => import( '../views/mine/FeedBack.vue'),
             meta: { title: '我的分享',showTabBar: false,  }
         },
+         {
+           path: '/choiseNote',
+           name: 'choiseNote',
+            component: () => import( '../views/mine/choiseNote.vue'),
+            meta: { title: '为笔记加标签',showTabBar: false,  }
+        },
+        {
+           path: '/edit',
+           name: 'edit',
+            component: () => import( '../views/home/edit.vue'),
+            meta: { title: 'dd',showTabBar: true,  }
+        },
+        {
+           path: '/file',
+           name: 'file',
+            component: () => import( '../views/home/File.vue'),
+            meta: { title: '为笔记加标签',showTabBar: true,  }
+        },
+        {
+           path: '/about',
+           name: 'about',
+            component: () => import( '../views/mine/about.vue'),
+            meta: { title: '关于我们',showTabBar: false,  }
+        },
+         {
+           path: '/tag',
+           name: 'tag',
+            component: () => import( '../views/mine/tag.vue'),
+            meta: { title: '标签',showTabBar: false,  }
+        },
         {
             path: '/login',
             component: () => import( '../views/login/Login.vue'),

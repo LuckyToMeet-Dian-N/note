@@ -19,7 +19,7 @@ export const getUserInfo = query => {
     return request({
         url: 'api/users/getUserInfo',
         method: 'get',
-        param: query
+        params: query
     });
 };
 
