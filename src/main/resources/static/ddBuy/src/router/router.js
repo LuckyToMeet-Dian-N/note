@@ -87,6 +87,24 @@ const router = new Router({
             meta: { title: '为笔记加标签',showTabBar: true,  }
         },
         {
+           path: '/video',
+           name: 'video',
+            component: () => import( '../views/home/uploadVideo.vue'),
+            meta: { title: '上传',showTabBar: true,  }
+        },
+         {
+           path: '/image',
+           name: 'image',
+            component: () => import( '../views/home/uploadImage.vue'),
+            meta: { title: '上传',showTabBar: true,  }
+        },
+         {
+           path: '/word',
+           name: 'word',
+            component: () => import( '../views/home/word.vue'),
+            meta: { title: '上传',showTabBar: true,  }
+        },
+        {
            path: '/about',
            name: 'about',
             component: () => import( '../views/mine/about.vue'),

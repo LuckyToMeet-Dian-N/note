@@ -12,6 +12,24 @@ import {
 } from 'vant';
 Vue.use(Loading);
 
+
+import {
+    ActionSheet
+} from 'vant';
+Vue.use(ActionSheet);
+
+import {
+     Collapse,
+    CollapseItem
+} from 'vant';
+Vue.use(Collapse).use(CollapseItem);
+
+import {
+  DropdownMenu,
+  DropdownItem
+} from 'vant';
+Vue.use(DropdownMenu).use(DropdownItem);
+
 // 3.栅栏格子 
 import {
     Grid,
@@ -31,6 +49,17 @@ import {
 } from 'vant';
 // options 为可选参数，无则不传
 Vue.use(Lazyload);
+
+import {
+    Notify
+} from 'vant';
+// options 为可选参数，无则不传
+Vue.use(Notify);
+
+import {
+    Uploader 
+}  from 'vant';
+Vue.use(Uploader);
 
 // 6.Tabbar 标签栏
 import {
