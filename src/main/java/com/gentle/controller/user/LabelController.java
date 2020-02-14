@@ -77,6 +77,8 @@ public class LabelController {
     NoteMapper noteMapper;
     @GetMapping("selectNoteByLabelId")
     public ResultBean<List<Note>> selectByNote(Integer labelId) {
+        System.out.println(labelId);
+        System.out.println(labelId);
         LabelAndNote labelAndNotel = new LabelAndNote();
         labelAndNotel.setLabelId(labelId);
         List<LabelAndNote> select = labelAndNoteMapper.select(labelAndNotel);

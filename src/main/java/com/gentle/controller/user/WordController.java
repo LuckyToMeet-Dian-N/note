@@ -41,13 +41,15 @@ public class WordController {
         if (!(substring.equals("docx")|| substring.equals("doc"))){
             throw new CheckException("只允许 doc 和 docx 格式文件");
         }
-        String s = FileUpload.fileUp(file, FileConstants.DEFAULT_ROOT_PATH, UuidUtil.get32UUID());
+        String uuid = UuidUtil.get32UUID();
+        uuid = uuid.substring(uuid.length()-20);
+        String s = FileUpload.fileUp(file, FileConstants.DEFAULT_ROOT_PATH, uuid);
         Users users  = (Users) RequestAndResponseUtils.getRequest().getAttribute("users");
         String contentWord=WordUtils1.readDataDocx(FileConstants.DEFAULT_ROOT_PATH+s);
 
         Note note = new Note();
         note.setNoteContent(contentWord);
-        note.setNoteTitle(s);
+        note.setNoteTitle(uuid);
         note.setCreateTime(new Date());
         note.setNoteType(0);
         note.setUsersId(users.getId());
