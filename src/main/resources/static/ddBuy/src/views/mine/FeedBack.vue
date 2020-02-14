@@ -17,12 +17,12 @@
           show-word-limit
         /> 
       <br>
-        <van-button type="primary" size="large">立即反馈</van-button>
-
+        <van-button type="primary" @click="save" size="large">立即反馈</van-button>
     </div>
 </template>
 <script type="text/javascript">
   import { Dialog, Toast } from 'vant'
+import { insertFeedBack } from '../../api/feedBack';
 
 export default {
   data () {
@@ -38,10 +38,33 @@ export default {
     this.getData()
   },
   methods: {
-    onClickLeft() {
-      Toast('返回');
+    save() {
+      
+      if (this.message=='') {
+          Toast({
+                  message: this.$t('反馈消息不能为空'),
+                  duration: 800
+              });
+          return false;
+      }
+      let param ={
+        message: this.message
+      }
+      insertFeedBack(param).then(resg => {
+            if (resg.code==0) {
+              Toast({
+                  message: this.$t('反馈成功'),
+                  duration: 800
+              });
+               this.message= ''
+             
+            }else{
+              Toast({
+                  message: this.$t(resg.msg),
+                  duration: 800
+              });
+            }});
     },
-
     onClickLeft () {
       this.$router.back();
     },

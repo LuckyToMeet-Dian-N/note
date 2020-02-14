@@ -71,7 +71,7 @@
      <van-cell title="我的标签"
                 icon="todo-list"
                 is-link
-                @click="goToPage('myAddress')" />
+                @click="goToPage('tag')" />
       <van-cell title="修改密码"
                 icon="todo-list"
                 is-link
@@ -93,7 +93,7 @@
       <van-cell title="关于我们"
                 icon="comment-circle"
                 is-link
-                @click="onFeedBack" />
+                @click="goToPage('about')" />
      <van-cell title="我的信箱"
                 icon="comment-circle"
                 is-link

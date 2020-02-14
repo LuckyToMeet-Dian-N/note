@@ -6,16 +6,37 @@
         left-arrow
         @click-left="onClickLeft"
       />
-      哈哈哈啊 
+      <div class="content">
+       <div v-for="item in collectionList">
+                 <van-swipe-cell>
+                  <van-cell
+                    @click=""
+                    :title="item.note.noteTitle"
+                    :value="item.note.updateTime"
+                  />
+                  <template slot="right">
+                    <van-button square type="danger"
+                      @click="removeCollection(item.id)"
+                      square
+                      text="取消收藏"
+                    />
+                  </template>
+                </van-swipe-cell>
+          </div>
+      </div> 
     </div>
 </template>
 <script type="text/javascript">
   import { Dialog, Toast } from 'vant'
+import { fetchData } from '../../api/collection';
+import { deleteCollection } from '../../api/collection';
+
 
 export default {
   data () {
     return {
-      typeArray: [],
+      collectionList: [
+      ],
       // 路由传递过来的数据 active
       active:'',
       itemsTitle:'',
@@ -25,18 +46,50 @@ export default {
     this.getData()
   },
   methods: {
-    onClickLeft() {
-      Toast('返回');
-    },
-
     onClickLeft () {
       this.$router.back();
     },
     getData(){
-      console.log(1111)
+       fetchData(this.query).then(resg => {
+            if (resg.code==0) {
+                this.collectionList = resg.data
+            }else{
+              Toast({
+                  message: this.$t(resg.msg),
+                  duration: 800
+              });
+            }});
     },
      back() {
       this.$router.go(-1);
+    },
+    removeCollection(item){
+      console.log(item)
+      let param= {
+          id: item
+      }
+        Dialog.confirm({
+          title: '经过',
+          message: '确定取消收藏吗？'
+        }).then(() => {
+            deleteCollection(param).then(resg => {
+            if (resg.code==0) {
+                Toast({
+                  message: this.$t(resg.msg),
+                  duration: 800
+              });
+                this.getData();
+            }else{
+              Toast({
+                  message: this.$t(resg.msg),
+                  duration: 800
+              });
+            }});
+        }).catch(() => {
+          // on cancel
+        });
+
+      
     },
   }
 }
@@ -55,4 +108,5 @@ export default {
     color: #dedede;
   }
 }
+
 </style>
