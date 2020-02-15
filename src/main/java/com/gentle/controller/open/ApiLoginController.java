@@ -1,7 +1,9 @@
 package com.gentle.controller.open;
 
+import com.gentle.bean.po.Files;
 import com.gentle.bean.po.Users;
 import com.gentle.exception.CheckException;
+import com.gentle.mapper.FilesMapper;
 import com.gentle.mapper.UserInfoMapper;
 import com.gentle.result.ResultBean;
 import com.gentle.service.OpenService;
@@ -24,6 +26,8 @@ public class ApiLoginController {
     OpenService openService;
     @Resource
     UserInfoMapper userInfoMapper;
+    @Resource
+    FilesMapper filesMapper;
 
     @PostMapping(value = "/users/login")
     public ResultBean<String> login(@RequestParam(value = "email") String email, @RequestParam(value = "password") String pwd) {
@@ -62,7 +66,14 @@ public class ApiLoginController {
         users.setUserType(0);
         users.setCreateTime(new Date());
         users.setUpdateTime(new Date());
-        userInfoMapper.insertSelective(users);
+        int i = userInfoMapper.insertSelective(users);
+
+        Files files= new Files();
+        files.setUsersId(users.getId());
+        files.setCreateTime(new Date());
+        files.setName("默认文件夹");
+        filesMapper.insertSelective(files);
+        System.out.println("hahah");
         return new ResultBean<>();
     }
     @PostMapping(value = "/users/findPassword")

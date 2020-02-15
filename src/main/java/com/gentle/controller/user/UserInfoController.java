@@ -57,4 +57,14 @@ public class UserInfoController {
         return new ResultBean<>(users1);
     }
 
+    @PostMapping(value="chongzhi")
+    public ResultBean<Users> chongzhi() {
+        Users users  = (Users) RequestAndResponseUtils.getRequest().getAttribute("users");
+        Users users1 = userInfoMapper.selectByPrimaryKey(users.getId());
+        Users users2 = new Users();
+        users2.setId(users.getId());
+        users2.setBalances(users1.getBalances()+10);
+        userInfoMapper.updateByPrimaryKeySelective(users2);
+        return new ResultBean<>(users1);
+    }
 }
