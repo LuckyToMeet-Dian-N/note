@@ -5,6 +5,7 @@ import com.gentle.bean.po.Share;
 import com.gentle.bean.po.Users;
 import com.gentle.bean.vo.ShareVO;
 import com.gentle.bean.vo.UserShareVO;
+import com.gentle.exception.CheckException;
 import com.gentle.mapper.NoteMapper;
 import com.gentle.mapper.ShareMapper;
 import com.gentle.mapper.UserInfoMapper;
@@ -41,6 +42,12 @@ public class ShareController {
     @PostMapping("insertShare")
     public ResultBean<String> insert(Integer noteId) {
         Users users  = (Users) RequestAndResponseUtils.getRequest().getAttribute("users");
+        Share share1 = new Share();
+        share1.setNoteId(noteId);
+        List<Share> select = shareMapper.select(share1);
+        if (!select.isEmpty()){
+            throw new CheckException("已经分享，无法继续分享");
+        }
         Share share = new Share();
         share.setUserId(users.getId());
         share.setCreateTime(new Date());
