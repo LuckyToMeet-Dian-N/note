@@ -98,6 +98,18 @@ const router = new Router({
             component: () => import( '../views/home/uploadImage.vue'),
             meta: { title: '上传',showTabBar: true,  }
         },
+        {
+           path: '/quills',
+           name: 'quills',
+            component: () => import( '../views/home/quill.vue'),
+            meta: { title: '上传',showTabBar: false,  }
+        },
+        {
+           path: '/zhanshi',
+           name: 'zhanshi',
+            component: () => import( '../views/home/zhanshi.vue'),
+            meta: { title: '上传',showTabBar: false,  }
+        },
          {
            path: '/word',
            name: 'word',

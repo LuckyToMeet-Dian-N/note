@@ -64,3 +64,20 @@ export const sendEmail = query => {
         data: qs.stringify(query)
     });
 };
+
+export const createNote = query => {
+    return request({
+        url: 'api/users/createNote',
+        method: 'post',
+        data: qs.stringify(query)
+    });
+};
+
+
+export const updateNote = query => {
+    return request({
+        url: 'api/users/updateNote',
+        method: 'post',
+        data: qs.stringify(query)
+    });
+};
