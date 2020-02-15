@@ -233,6 +233,7 @@ export default {
                     message: this.$t('注册成功成功'),
                     duration: 800
                 });
+                this.active=0
                 this.registInfo.userName=''
                 this.registInfo.email=''
                 this.registInfo.password=''

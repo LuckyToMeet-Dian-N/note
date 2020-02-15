@@ -341,6 +341,7 @@ export default {
                 sendEmail(this.send).then(resg => {
                     if (resg.code==0) {
                         Toast('发送成功');
+                        this.mailDiago=false;
                     }else{
                       Toast({
                           message: this.$t(resg.msg),

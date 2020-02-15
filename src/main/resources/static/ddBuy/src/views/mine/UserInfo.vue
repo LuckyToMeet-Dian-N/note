@@ -14,9 +14,27 @@
           <van-field v-model="userInfo.age"  label="年龄" />
           <van-field v-model="userInfo.region" type="text" label="地区" />
            <van-field v-model="userInfo.balances"  type="number" disabled  label="账户余额" >
-             <van-button slot="button" size="small"  type="primary">充值</van-button>
+             <van-button slot="button" size="small" @click="goToPage('pay')"  type="primary">充值</van-button>
            </van-field>
+          <div v-if="win">
+            <van-overlay v-model="win">
+               <!-- 密码输入框 -->
+                <van-password-input
+                  :value="value"
+                  :error-info="errorInfo"
+                  :focused="showKeyboard"
+                />
+                <!-- 数字键盘 -->
+                <van-number-keyboard
+                  :show="showKeyboard"
+                  @input="onInput"
+                  @delete="onDelete"
+                  @blur="showKeyboard = false"
+                />
+            </van-overlay>
+          </div>
     </div>
+
 </template>
 <script type="text/javascript">
   import { Dialog, Toast } from 'vant'
@@ -27,6 +45,10 @@ export default {
   data () {
     return {
       typeArray: [],
+      value:'',
+      showKeyboard: false,
+      win: false,
+      errorInfo: '',
       // 路由传递过来的数据 active
       active:'',
       itemsTitle:'',
@@ -110,6 +132,23 @@ export default {
     },
      back() {
       this.$router.go(-1);
+    },
+    onInput(key) {
+      this.value = (this.value + key).slice(0, 6);
+      if (this.value.length === 6) {
+        this.errorInfo = '密码错误';
+      } else {
+        this.errorInfo = '';
+      }
+    },
+    onDelete() {
+      this.value = this.value.slice(0, this.value.length - 1);
+    },
+    chongzhi(){
+      this.win= true;
+    },
+    goToPage (name) {
+      this.$router.push({ name });
     },
   }
 }
