@@ -118,10 +118,11 @@ public class NoteController {
         if (StringUtils.isEmpty(noteType)){
             Note note = new Note();
             note.setUsersId(users.getId());
-            notes = noteMapper.selectAll();
+            notes = noteMapper.select(note);
         }else {
             Note note = new Note();
             note.setNoteType(noteType);
+            note.setUsersId(users.getId());
             notes= noteMapper.select(note);
         }
         return new ResultBean<>(notes);
