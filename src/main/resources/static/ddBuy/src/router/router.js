@@ -104,6 +104,12 @@ const router = new Router({
             component: () => import( '../views/home/word.vue'),
             meta: { title: '上传',showTabBar: true,  }
         },
+          {
+           path: '/pay',
+           name: 'pay',
+            component: () => import( '../views/mine/chongzhi.vue'),
+            meta: { title: '充值',showTabBar: false,  }
+        },
         {
            path: '/about',
            name: 'about',

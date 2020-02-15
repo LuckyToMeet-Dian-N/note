@@ -18,6 +18,14 @@ import {
 } from 'vant';
 Vue.use(ActionSheet);
 
+import { 
+    PasswordInput, 
+    NumberKeyboard 
+} from 'vant';
+
+Vue.use(PasswordInput);
+Vue.use(NumberKeyboard);
+
 import {
      Collapse,
     CollapseItem

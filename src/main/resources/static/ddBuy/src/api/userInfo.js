@@ -15,4 +15,11 @@ export const updatePassword = query => {
         data: qs.stringify(query)
     });
 };
+export const chongzhi = query => {
+    return request({
+        url: 'api/users/chongzhi',
+        method: 'post',
+        data: qs.stringify(query)
+    });
+};
 
