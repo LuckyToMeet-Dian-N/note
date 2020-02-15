@@ -58,7 +58,7 @@
        <van-cell title="我的订单"
                 icon="label"
                 is-link
-                @click="goTomyOrder(-1)">
+                @click="goToPage('orders')">
       </van-cell>
       <van-cell title="我的收藏"
                 icon="todo-list"
@@ -81,9 +81,9 @@
     <van-cell-group style="margin-top:0.4rem">
       <van-cell is-link
                 icon="vip-card"
-                @click="goToPage('myVip')">
+                @click="goToPage('vip')">
         <template slot="title">
-          <span class="custom-title">我的权益</span>
+          <span class="custom-title">我的会员</span>
           <van-tag type="danger"
                    :round=true>NEW</van-tag>
         </template>

@@ -128,6 +128,18 @@ const router = new Router({
             component: () => import( '../views/mine/about.vue'),
             meta: { title: '关于我们',showTabBar: false,  }
         },
+        {
+           path: '/vip',
+           name: 'vip',
+            component: () => import( '../views/mine/vip.vue'),
+            meta: { title: '关于我们',showTabBar: false,  }
+        },
+        {
+           path: '/orders',
+           name: 'orders',
+            component: () => import( '../views/mine/orders.vue'),
+            meta: { title: '订单',showTabBar: false,  }
+        },
          {
            path: '/tag',
            name: 'tag',
