@@ -1,10 +1,13 @@
 package com.gentle.controller.user;
 
 import com.gentle.bean.po.Files;
+import com.gentle.bean.po.LabelAndNote;
 import com.gentle.bean.po.Note;
 import com.gentle.bean.po.Users;
 import com.gentle.exception.CheckException;
 import com.gentle.mapper.FilesMapper;
+import com.gentle.mapper.LabelAndNoteMapper;
+import com.gentle.mapper.LabelMapper;
 import com.gentle.mapper.NoteMapper;
 import com.gentle.result.ResultBean;
 import com.gentle.utils.*;
@@ -98,6 +101,8 @@ public class WordController {
             e.printStackTrace();
         }
     }
+
+
 
 
 }

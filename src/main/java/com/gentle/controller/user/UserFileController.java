@@ -136,6 +136,7 @@ public class UserFileController {
     @PostMapping(value = "usersUploadFile")
     @Transactional
     public ResultBean<String> uploadOralLanguage(@RequestParam("file") MultipartFile file,Note note){
+        System.out.println(note);
         ValidataUtils.isNotNull(file,"文件不存在，请检查上传文件");
         ValidataUtils.isNotNullByString(note.getNoteType(),"文稿类型不能为空！");
         String substring = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
