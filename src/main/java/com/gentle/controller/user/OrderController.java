@@ -31,15 +31,16 @@ public class OrderController {
 
     @PostMapping(value = "createOrders")
     public ResultBean<String> createOrders() {
+        Users users  = (Users) RequestAndResponseUtils.getRequest().getAttribute("users");
         Orders orders = new Orders();
         orders.setCreateTime(new Date());
         String uuid = UuidUtil.get32UUID();
+        orders.setUserId(users.getId());
         orders.setOrderNumber(uuid);
         orders.setPayState(0);
         int i = ordersMapper.insertSelective(orders);
         return new ResultBean<>(uuid);
     }
-
 
     @GetMapping(value = "getOrderList")
     public ResultBean<List<Orders>> getOrderList() {
@@ -47,6 +48,8 @@ public class OrderController {
         Users users  = (Users) RequestAndResponseUtils.getRequest().getAttribute("users");
         orders.setUserId(users.getId());
         List<Orders> select = ordersMapper.select(orders);
+        System.out.println(select);
+        System.out.println(users.getId());
         return new ResultBean<>(select);
     }
 
@@ -54,7 +57,8 @@ public class OrderController {
     UserInfoMapper userInfoMapper;
 
     @PostMapping(value = "updateOrderStatus")
-    public ResultBean<String> updateOrderStatus(String orderNumber) {
+    public ResultBean<String> updateOrderStatus(String password) {
+        String orderNumber = createOrders().getData();
         Orders orders = new Orders();
         orders.setOrderNumber(orderNumber);
         Orders orders1 = ordersMapper.selectOne(orders);
@@ -62,14 +66,17 @@ public class OrderController {
             throw new CheckException("订单号不存在");
         }
         Users users  = (Users) RequestAndResponseUtils.getRequest().getAttribute("users");
+        if (!password.equals(users.getSecurity())){
+            throw new CheckException("安全码不正确");
+        }
         Users users1 = userInfoMapper.selectByPrimaryKey(users.getId());
-        if (!(users1.getBalances()-10>=0)){
+        if (!(users1.getBalances()-120>=0)){
             throw new CheckException("余额不足，请先充值");
         }
         Users users2 = new Users();
         users2.setId(users.getId());
         users2.setUserType(1);
-        users2.setBalances(users1.getBalances()-10);
+        users2.setBalances(users1.getBalances()-120);
         userInfoMapper.updateByPrimaryKeySelective(users2);
 
         orders.setId(orders1.getId());

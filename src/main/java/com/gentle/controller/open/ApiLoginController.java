@@ -1,19 +1,28 @@
 package com.gentle.controller.open;
 
 import com.gentle.bean.po.Files;
+import com.gentle.bean.po.LabelAndNote;
+import com.gentle.bean.po.Note;
 import com.gentle.bean.po.Users;
 import com.gentle.exception.CheckException;
 import com.gentle.mapper.FilesMapper;
+import com.gentle.mapper.LabelAndNoteMapper;
+import com.gentle.mapper.NoteMapper;
 import com.gentle.mapper.UserInfoMapper;
 import com.gentle.result.ResultBean;
 import com.gentle.service.OpenService;
+import com.gentle.utils.FileDownload;
+import com.gentle.utils.RequestAndResponseUtils;
 import com.gentle.utils.ValidataUtils;
+import com.gentle.utils.WordUtils1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 
 @RestController
@@ -95,9 +104,36 @@ public class ApiLoginController {
         int i = userInfoMapper.updateByPrimaryKeySelective(users);
         return new ResultBean<>();
     }
-
-
-
+    @Resource
+    LabelAndNoteMapper labelAndNoteMapper;
+    @Resource
+    NoteMapper noteMapper;
+    @GetMapping("/users/downloadNoteByLabelId")
+    public void downLoadNotessss(Integer labelId) {
+        ValidataUtils.isNotNullByString(labelId,"labelId 不能为空");
+        LabelAndNote labelAndNote = new LabelAndNote();
+        labelAndNote.setLabelId(labelId);
+        List<LabelAndNote> labelAndNotes = labelAndNoteMapper.select(labelAndNote);
+        StringBuilder stringBuilder = new StringBuilder();
+        labelAndNotes.forEach(sss->{
+            Note note = noteMapper.selectByPrimaryKey(sss.getNoteId());
+            if (note.getNoteType()!=0){
+                stringBuilder.append(note.getFilePath());
+            }else{
+                stringBuilder.append(note.getNoteContent());
+            }
+            stringBuilder.append("\r\r\r");
+        });
+        String uuid = UUID.randomUUID().toString();
+        String path = "/home/test/" + uuid + ".docx";
+        WordUtils1.createWord("/home/test/",uuid + ".docx");
+        WordUtils1.writeDataDocx(path,stringBuilder.toString(),false,13);
+        try {
+            FileDownload.fileDownload(RequestAndResponseUtils.getResponse(), "/home/test/", uuid + ".docx");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
 }

@@ -58,12 +58,15 @@ public class UserInfoController {
     }
 
     @PostMapping(value="chongzhi")
-    public ResultBean<Users> chongzhi() {
+    public ResultBean<Users> chongzhi(String password,Integer money) {
         Users users  = (Users) RequestAndResponseUtils.getRequest().getAttribute("users");
         Users users1 = userInfoMapper.selectByPrimaryKey(users.getId());
+        if (!password.equals(users1.getSecurity())){
+            throw new CheckException("安全码错误");
+        }
         Users users2 = new Users();
         users2.setId(users.getId());
-        users2.setBalances(users1.getBalances()+10);
+        users2.setBalances(users1.getBalances()+money);
         userInfoMapper.updateByPrimaryKeySelective(users2);
         return new ResultBean<>(users1);
     }
