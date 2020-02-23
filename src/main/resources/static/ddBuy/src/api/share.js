@@ -23,3 +23,10 @@ export const getUserInfo = query => {
     });
 };
 
+export const allShare = query => {
+    return request({
+        url: 'api/users/selectShareInfo',
+        method: 'get',
+        params: query
+    });
+};

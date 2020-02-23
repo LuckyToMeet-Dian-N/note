@@ -227,6 +227,10 @@ export default {
                   duration: 800});  
             return false;
         }
+        if (this.registInfo.security.length!=6) {
+           Toast('安全码必须为6位')
+            return false;
+        }
         regist(this.registInfo).then(res => {
               if (res.code==0) {
                 Toast({

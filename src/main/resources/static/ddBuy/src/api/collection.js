@@ -23,3 +23,11 @@ export const insertCollection = query => {
         data: qs.stringify(query)
     });
 };
+
+export const allCollections = query => {
+    return request({
+        url: 'api/users/getAllCollections',
+        method: 'get',
+        params: query
+    });
+};

@@ -12,7 +12,7 @@
         <div v-for="item in shareInfo.myShare">
             <van-swipe-cell>
                   <van-cell
-                    @click=""
+                    @click="gotoNote(item)"
                     :title="item.noteTitle"
                     :label="item.createTime"
                   />
@@ -33,7 +33,7 @@
     <div v-for="item in shareInfo.allShare">
             <van-swipe-cell>
                   <van-cell
-                    @click=""
+                    @click="gotoNote(item)"
                     :title="item.noteTitle"
                     :label="item.createTime"
                   />
@@ -79,6 +79,7 @@ export default {
     onClickLeft () {
       this.$router.back();
     },
+    
     getData(){
       var info = JSON.parse(localStorage.getItem('userInfo'))
       this.userInfo=info
@@ -98,6 +99,10 @@ export default {
     removeShare(id){
 
 
+    },
+    gotoNote(item){
+      localStorage.setItem('noteInfo',JSON.stringify(item))
+      this.$router.push('zhanshi');
     },
     collection(id){
         let param = {

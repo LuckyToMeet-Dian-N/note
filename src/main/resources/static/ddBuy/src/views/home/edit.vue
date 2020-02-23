@@ -7,7 +7,7 @@
             <van-grid-item
               icon="notes-o"
               link-type="navigateTo"
-              url="/"
+              @click="goToPage('quills')"
               text="新文稿"
             />
             <van-grid-item

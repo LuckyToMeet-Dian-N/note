@@ -21,7 +21,7 @@
           <div v-for="item in listNote">
             <van-swipe-cell>
                   <van-cell
-                    @click=""
+                    @click="gotoNote(item)"
                     :title="item.noteTitle"
                     :label="item.createTime"
                   />
@@ -81,6 +81,10 @@ export default {
     this.getData();
   },
   methods: {
+    gotoNote(item){
+      localStorage.setItem('noteInfo',JSON.stringify(item))
+      this.$router.push('zhanshi');
+    },
     onClickLeft () {
       this.$router.back();
     },

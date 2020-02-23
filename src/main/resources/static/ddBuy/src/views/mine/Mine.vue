@@ -41,15 +41,15 @@
     <van-cell-group>
       <van-grid :border=false :column-num="3">
           <van-grid-item >
-            <b style="font-size: 30px">22</b>
+            <b style="font-size: 30px">{{allCount}}</b>
             <i style="font-size: 12px">总文稿</i>
           </van-grid-item>
           <van-grid-item icon="photo-o" >
-            <b style="font-size: 30px">3</b>
+            <b style="font-size: 30px">{{shareCount}}</b>
             <i style="font-size: 12px">分享</i>
           </van-grid-item>
           <van-grid-item icon="photo-o" text="文字" >
-            <b style="font-size: 30px">3</b>
+            <b style="font-size: 30px">{{allCollectionCount}}</b>
             <i style="font-size: 12px">收藏</i>
           </van-grid-item>
       </van-grid>
@@ -58,7 +58,7 @@
        <van-cell title="我的订单"
                 icon="label"
                 is-link
-                @click="goTomyOrder(-1)">
+                @click="goToPage('orders')">
       </van-cell>
       <van-cell title="我的收藏"
                 icon="todo-list"
@@ -81,9 +81,9 @@
     <van-cell-group style="margin-top:0.4rem">
       <van-cell is-link
                 icon="vip-card"
-                @click="goToPage('myVip')">
+                @click="goToPage('vip')">
         <template slot="title">
-          <span class="custom-title">我的权益</span>
+          <span class="custom-title">我的会员</span>
           <van-tag type="danger"
                    :round=true>NEW</van-tag>
         </template>
@@ -119,10 +119,17 @@
 <script type="text/javascript">
 // 引入vuex
 import { Dialog, Toast } from 'vant'
+import { fetchData } from '../../api/note';
+import { allCollections } from '../../api/collection';
+import { allShare } from '../../api/share';
+
 
 export default {
   data () {
     return {
+      allCount: 0,
+      allCollectionCount:0,
+      shareCount:0,
       userInfo:{},
       temp:{},
       // 头像
@@ -140,6 +147,7 @@ export default {
   },
   created(){
       this.getInfo()
+      this.getData()
   },
   methods: {
     getInfo(){
@@ -159,6 +167,36 @@ export default {
             this.userInfo.token =true;
        }
        console.log(this.userInfo)
+    },
+    getData(){
+         fetchData(this.query).then(resg => {
+            if (resg.code==0) {
+                 var j =0;
+                 for (var i =0; i< resg.data.length; i++) {
+                     j=j+resg.data[i].noteList.length;
+                    console.log(resg.data[i].noteList)
+                 }
+                 this.allCount= j;
+            }else{
+              Toast(resg.msg);
+            }
+          });
+
+        allCollections(this.query).then(resg => {
+            if (resg.code==0) {
+                 this.allCollectionCount= resg.data.length;
+            }else{
+              Toast(resg.msg);
+            }
+          });
+        allShare(this.query).then(resg => {
+            if (resg.code==0) {
+                 this.shareCount= resg.data.myShare.length;
+            }else{
+              Toast(resg.msg);
+            }
+          });
+
     },
     // 跳转到我的订单
     goTomyOrder (index) {

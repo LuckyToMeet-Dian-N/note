@@ -55,9 +55,29 @@
           <br>
           <br>
         </van-radio-group>
-          <van-field v-model="value" disabled   label="支付金额" />
+          <van-field v-model="aa"    label="支付金额" />
         <div class="payButton"
          @click="clickPay">立即充值</div>
+
+            <van-popup v-model="show">
+              <div class="pay_password" >
+                  <!-- 密码输入框 -->
+                  <div class="password_input">
+                      <h3 style="text-align: center;margin-bottom: 30px">￥{{aa}}</h3>
+                      <van-password-input
+                              :value="value"
+                      />
+                  </div>
+                  <!--键盘-->
+                  <van-number-keyboard
+                          :show="show"
+                          @blur="show = false"
+                          @input="onInput"
+                          @delete="onDelete"
+                  />
+              </div>
+          </van-popup>
+
     </div>
 
 </template>
@@ -70,13 +90,15 @@ import { chongzhi } from '../../api/userInfo';
 export default {
   data () {
     return {
+      show:false,
       typeArray: [],
       value:'',
       showKeyboard: false,
       win: false,
       errorInfo: '',
       radio: '',
-      value: 10,
+      value: '',
+      aa:'10',
       // 路由传递过来的数据 active
       active:'',
       itemsTitle:'',
@@ -113,7 +135,21 @@ export default {
     onInput(key) {
       this.value = (this.value + key).slice(0, 6);
       if (this.value.length === 6) {
-        this.errorInfo = '密码错误';
+            let param={
+              password: this.value,
+              money: this.aa
+          }
+         chongzhi(param).then(resg => {
+            if (resg.code==0) {
+              Toast('充值成功');
+              this.show= false;
+              this.$router.go(-1);
+            }else{
+              Toast({
+                  message: this.$t(resg.msg),
+                  duration: 800
+              });
+        }});
       } else {
         this.errorInfo = '';
       }
@@ -129,18 +165,7 @@ export default {
          Toast('请选择支付方式');
          return false
       }
-      let param={
-      }
-        chongzhi(param).then(resg => {
-            if (resg.code==0) {
-              Toast('充值成功');
-              this.$router.go(-1);
-            }else{
-              Toast({
-                  message: this.$t(resg.msg),
-                  duration: 800
-              });
-        }});
+      this.show=true       
     }
   }
 }
@@ -173,4 +198,23 @@ export default {
     border-radius: 1.5rem;
     background-color: #60b86a;
   }
+  .van-popup {
+            transform: none;
+        }
+ 
+.pay_password {
+  background: #FAFAFA;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 63%;
+}
+
+.password_input {
+  position: fixed;
+  left: 0;
+  bottom: 250px;
+  width: 100%;
+}
 </style>
