@@ -55,11 +55,11 @@
       </van-grid>
     </van-cell-group>
     <van-cell-group style="margin-top:0.4rem">
-       <van-cell title="我的订单"
+      <!--  <van-cell title="我的订单"
                 icon="label"
                 is-link
                 @click="goToPage('orders')">
-      </van-cell>
+      </van-cell> -->
       <van-cell title="我的收藏"
                 icon="todo-list"
                 is-link
@@ -94,10 +94,10 @@
                 icon="comment-circle"
                 is-link
                 @click="goToPage('about')" />
-     <van-cell title="我的信箱"
+     <!-- <van-cell title="我的信箱"
                 icon="comment-circle"
                 is-link
-                @click="onFeedBack" />
+                @click="onFeedBack" /> -->
       <van-cell title="联系客服"
                 icon="phone"
                 value="客服时间 07:00-22:00"

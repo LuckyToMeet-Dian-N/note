@@ -29,6 +29,7 @@
                            :on-error="errorMethod"
                           action="http://localhost:8080/api/admin/deployVersions"
                           :multiple="false"
+                          :headers="token"
                           :auto-upload="false"
                           :limit="1"
                         >
@@ -60,10 +61,14 @@ export default {
                 description: '',
                 version: '',
             },
+            token:{},
             fileList:[]
         };
     },
-  
+    created(){
+        var info =  localStorage.getItem('ms_username')
+        this.token = {token: info}
+    },
     methods: {
        submitUpload() {
         if (this.aaa.description=='') {

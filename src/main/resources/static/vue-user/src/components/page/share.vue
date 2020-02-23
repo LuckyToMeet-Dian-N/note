@@ -160,11 +160,11 @@
                            
                          </i>                        
                         <i v-if="form.noteType == 1"> 
-                            <textarea v-if="form.noteContent!=''" :disabled="true" style="width: 100%;height:300px">{{form.noteContent}}</textarea>
+                            <!-- <textarea v-if="form.noteContent!=''" :disabled="true" style="width: 100%;height:300px">{{form.noteContent}}</textarea> -->
                             <el-image style="width: 100%;height: 400px;" src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"></el-image>
                         </i> 
                         <i v-if="form.noteType == 2"> 
-                            <textarea v-if="form.noteContent!=''" :disabled="true" style="width: 100%;height:300px">{{form.noteContent}}</textarea>
+                            <!-- <textarea v-if="form.noteContent!=''" :disabled="true" style="width: 100%;height:300px">{{form.noteContent}}</textarea> -->
                             <video  style="width: 100%;height: 400px"      
                                      class="video-js vjs-default-skin vjs-big-play-centered" 
                                      controls 

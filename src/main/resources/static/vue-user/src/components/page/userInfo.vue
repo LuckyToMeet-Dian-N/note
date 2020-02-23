@@ -13,10 +13,10 @@
              <el-form-item label="账户类型">
                <!--  <el-input v-model="form.userType" style="width: 200px"></el-input> -->
                <i v-if="form.userType==0">
-                    <el-tag type="success">普通会员</el-tag>
+                    <el-tag type="success">非会员</el-tag>
                </i>
                 <i v-if="form.userType==1">
-                    <el-tag type="success">超级会员</el-tag>
+                    <el-tag type="success">会员</el-tag>
                </i>
             </el-form-item>
              <el-form-item label="邮箱">

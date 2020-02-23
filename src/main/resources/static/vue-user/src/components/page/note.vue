@@ -95,6 +95,7 @@
                            :on-error="errorMethod"
                           action="http://localhost:8080/api/users/usersUploadFile"
                           :multiple="false"
+                          :headers="token"
                           :auto-upload="false"
                           :limit="1"
                         >
@@ -119,6 +120,7 @@
                            :onhandleChange="handleChange"
                            :on-success="successMethod"
                            :on-error="errorMethod"
+                           :headers="token" 
                           action="http://localhost:8080/api/users/usersUploadFile"
                           :multiple="false"
                           :auto-upload="false"
@@ -147,6 +149,7 @@
                            :on-error="errorMethod"
                           action="http://localhost:8080/api/users/insertNoteByWord"
                           :multiple="false"
+                          :headers="token"  
                           :auto-upload="false"
                           :limit="1"
                         >
@@ -262,12 +265,16 @@ export default {
             form: {
                 note:{}   
             },
+            tokken:{}
         };
     },
     components: {
         quillEditor
     },
     created() {
+       var info =  localStorage.getItem('ms_username')
+        this.token = {token: info}
+        console.log(this.token)
         this.getData();
     },
     methods: {
@@ -326,10 +333,6 @@ export default {
                 this.$message.error('不支持多个文件');
                 return false;
             }
-            if (a[length-1]!='docx' ) {
-                this.$message.error('文件类型不支持');
-                return false;
-            }
             this.$refs.upload.submit();
             this.uploadWordDialog =false
         },
@@ -341,9 +344,8 @@ export default {
           },
         successMethod(){
             this.$message.success('上传成功!请刷新');
-            this.$refs.upload.uploadFiles=[];
-            this.aaa.description=''
-            this.aaa.version=''
+            // this.aaa.description=''
+            // this.aaa.version=''
             this.getData();
           },
         errorMethod(err, file, fileList){
@@ -358,10 +360,6 @@ export default {
                 this.$message.error('不支持多个文件');
                 return false;
             }
-            if (!(a[length-1]=='jpg'|| !a[length-1]=='png' )) {
-                this.$message.error('文件类型不支持');
-                return false;
-            }
             this.$refs.uploadImages.submit();
             this.getData()
             this.uploadImagesDialog=false
@@ -374,10 +372,7 @@ export default {
                 this.$message.error('不支持多个文件');
                 return false;
             }
-            if (a[length-1]!='docx' ) {
-                this.$message.error('文件类型不支持');
-                return false;
-            }
+           
             this.$refs.uploadShiPin.submit();
             this.getData();
             this.uploadShiPinDialog= false

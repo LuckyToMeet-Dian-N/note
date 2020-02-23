@@ -46,7 +46,7 @@ export default {
       
       var info = JSON.parse(localStorage.getItem('userInfo'))
 
-      if (file.file.size>1 * 1024 * 1024 &&info.userType==0) {
+      if (file.file.size>1 * 1024 * 1024*1024 &&info.userType==0) {
            Notify( {type: 'danger', message: '非会员视频上传不能超过 10M'} );
         return false;
       }

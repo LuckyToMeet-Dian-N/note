@@ -36,8 +36,14 @@
            <img style="width: 100%;height: 50%px" :src="noteInfo.filePath">
         </div>
 
-        <div v-if="noteInfo.noteType==3">
-           
+        <div v-if="noteInfo.noteType==2">
+          <video width="100%" height="240" controls="controls">
+            <source :src="noteInfo.filePath" type="video/mp4" />
+
+            <object :src="noteInfo.filePath" width="100%" height="240">
+              <embed :src="noteInfo.filePath" width="100%" height="240" />
+            </object>
+          </video>
         </div>
 
         </div>

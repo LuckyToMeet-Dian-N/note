@@ -85,7 +85,7 @@
                     </template>
                 </el-table-column>
             </el-table>
-            <div class="pagination">
+           <!--  <div class="pagination">
                 <el-pagination
                     background
                     layout="total, prev, pager, next"
@@ -93,7 +93,7 @@
                     :page-size="query.pageSize"
                     :total="pageTotal"
                 ></el-pagination>
-            </div>
+            </div> -->
         </div>
 
         <!-- 编辑弹出框 -->

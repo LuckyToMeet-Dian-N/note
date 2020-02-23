@@ -6,8 +6,18 @@
         left-arrow
         right-text="新增"
         @click-left="onClickLeft"
-        @click-right="onClickRight"
-      />
+      >
+        <van-icon name="shop-collect-o" slot="right" >
+          <van-dropdown-menu>
+            <van-dropdown-item >
+                <van-cell title="导出笔记" @click="daochu">
+                </van-cell>
+                <van-cell title="新增" @click="onClickRight">
+                </van-cell>
+            </van-dropdown-item>
+          </van-dropdown-menu>
+        </van-icon>
+      </van-nav-bar>
        <van-nav-bar v-if="show"
         title="关联笔记"
         left-text="取消"
@@ -56,6 +66,7 @@ import { fetchDataByNoteId } from '../../api/tag';
 import { fetchData } from '../../api/note';
 import { addLabelByNote } from '../../api/tag';
 import { deleteLabelByNote } from '../../api/tag';
+import { downloadNoteByLabelId } from '../../api/share';
 
 
 // 引入页面组件
@@ -68,6 +79,7 @@ export default {
       query:{
         labelId:''
       },
+      aaa:false,
       listNote:[],
       result:[],
       allNote:[],
@@ -187,6 +199,13 @@ export default {
           // on cancel
         });
 
+      },
+      daochu(labelId){
+         var ids =localStorage.getItem('noteId');
+        var urlSearchParam = new URLSearchParams();
+        urlSearchParam.append("labelId",ids);
+        window.open('http://192.168.37.1:8080/api/users/downloadNoteByLabelId?labelId='+ids, "_blank");
+        
       }
   },
 }
