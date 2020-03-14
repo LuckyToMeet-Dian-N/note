@@ -204,7 +204,7 @@ export default {
          var ids =localStorage.getItem('noteId');
         var urlSearchParam = new URLSearchParams();
         urlSearchParam.append("labelId",ids);
-        window.open('http://192.168.37.1:8080/api/users/downloadNoteByLabelId?labelId='+ids, "_blank");
+        window.open('http://192.168.0.24:8080/api/users/downloadNoteByLabelId?labelId='+ids, "_blank");
         
       }
   },
