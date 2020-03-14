@@ -8,6 +8,7 @@ import com.gentle.exception.CheckException;
 import com.gentle.mapper.LabelAndNoteMapper;
 import com.gentle.mapper.LabelMapper;
 import com.gentle.mapper.NoteMapper;
+import com.gentle.mapper.UserInfoMapper;
 import com.gentle.result.ResultBean;
 import com.gentle.service.LabelService;
 import com.gentle.utils.RequestAndResponseUtils;
@@ -36,12 +37,27 @@ public class LabelController {
     LabelMapper labelMapper;
     @Resource
     LabelAndNoteMapper labelAndNoteMapper;
+    @Resource
+    UserInfoMapper userInfoMapper;
+
 
     @PostMapping(value = "insertLabel")
     public ResultBean<String> insert(Label label) {
         Users users = (Users) RequestAndResponseUtils.getRequest().getAttribute("users");
-
         ValidataUtils.isNotNullByString(label.getLabelName(),"标签名不能为空");
+        Users users1 = userInfoMapper.selectByPrimaryKey(users.getId());
+        Label label1  = new Label();
+        label1.setUsersId(label1.getId());
+        int count = labelMapper.selectCount(label1);
+        if (count>10){
+            if (users1.getUserType()==0){
+                throw new CheckException("非会员用户标签最多创建 10 个标签");
+            }else {
+                if (count>30){
+                    throw new CheckException("会员用户标签最多创建 30 个标签");
+                }
+            }
+        }
         label.setUpdateTime(new Date());
         label.setCreateTime(new Date());
         label.setUsersId(users.getId());

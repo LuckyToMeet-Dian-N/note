@@ -40,6 +40,18 @@ public class CollectionController {
         if (collections2!=null){
             throw new CheckException("已经收藏过，无法再次收藏");
         }
+        Collections collections3 = new Collections();
+        collections3.setUsersId(users.getId());
+        int count = collectionMapper.selectCount(collections3);
+        if (count>20){
+            if (users.getUserType()==0){
+                throw new CheckException("非会员用户最多收藏 20 个文稿");
+            }else {
+                if (count>50){
+                    throw new CheckException("会员用户最多收藏 50 个文稿");
+                }
+            }
+        }
         Collections collections = new Collections();
         collections.setCreateTime(new Date());
         collections.setNoteId(noteId);

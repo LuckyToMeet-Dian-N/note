@@ -9,6 +9,7 @@ import com.gentle.bean.vo.FilesVO;
 import com.gentle.exception.CheckException;
 import com.gentle.mapper.FilesMapper;
 import com.gentle.mapper.NoteMapper;
+import com.gentle.mapper.UserInfoMapper;
 import com.gentle.result.ResultBean;
 import com.gentle.service.FileService;
 import com.gentle.utils.*;
@@ -133,13 +134,16 @@ public class UserFileController {
 
         return new ResultBean<>(filesVoArrayList);
     }
+    @Resource
+    UserInfoMapper userInfoMapper;
     @PostMapping(value = "usersUploadFile")
     @Transactional
     public ResultBean<String> uploadOralLanguage(@RequestParam("file") MultipartFile file,Note note){
-        System.out.println(note);
         ValidataUtils.isNotNull(file,"文件不存在，请检查上传文件");
         ValidataUtils.isNotNullByString(note.getNoteType(),"文稿类型不能为空！");
+        Users users  = (Users) RequestAndResponseUtils.getRequest().getAttribute("users");
         String substring = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+        Users users1 = userInfoMapper.selectByPrimaryKey(users.getId());
         if (note.getNoteType()==1){
             if (!(substring.equals(".jpg") || substring.equals(".png"))){
                 throw new CheckException("文件类型不支持");
@@ -148,12 +152,18 @@ public class UserFileController {
             if (!(substring.equals(".mp4"))){
                 throw new CheckException("文件类型不支持");
             }
+            if (users1.getUserType()==0){
+                throw new CheckException("非会员用户不支持使用视频文稿！");
+            }else {
+                if (file.getSize()>1024*1024*10){
+                    throw new CheckException("会员用户最大可上传 10M 文件");
+                }
+            }
         }else {
             throw new CheckException("不支持的类型");
         }
         String s = FileUpload.fileUp(file, FileConstants.DEFAULT_ROOT_PATH, UuidUtil.get32UUID());
         String  path = "http://localhost:8080/"+s;
-        Users users  = (Users) RequestAndResponseUtils.getRequest().getAttribute("users");
         note.setUsersId(users.getId());
         note.setNoteTitle(file.getOriginalFilename());
         note.setCreateTime(new Date());
