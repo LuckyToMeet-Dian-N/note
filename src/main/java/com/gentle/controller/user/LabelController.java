@@ -47,9 +47,9 @@ public class LabelController {
         ValidataUtils.isNotNullByString(label.getLabelName(),"标签名不能为空");
         Users users1 = userInfoMapper.selectByPrimaryKey(users.getId());
         Label label1  = new Label();
-        label1.setUsersId(label1.getId());
+        label1.setUsersId(users1.getId());
         int count = labelMapper.selectCount(label1);
-        if (count>10){
+        if (count+1>10){
             if (users1.getUserType()==0){
                 throw new CheckException("非会员用户标签最多创建 10 个标签");
             }else {

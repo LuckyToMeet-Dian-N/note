@@ -43,11 +43,11 @@ public class CollectionController {
         Collections collections3 = new Collections();
         collections3.setUsersId(users.getId());
         int count = collectionMapper.selectCount(collections3);
-        if (count>20){
+        if (count+1>20){
             if (users.getUserType()==0){
                 throw new CheckException("非会员用户最多收藏 20 个文稿");
             }else {
-                if (count>50){
+                if (count+1>50){
                     throw new CheckException("会员用户最多收藏 50 个文稿");
                 }
             }
