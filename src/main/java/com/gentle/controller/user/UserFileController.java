@@ -163,7 +163,7 @@ public class UserFileController {
             throw new CheckException("不支持的类型");
         }
         String s = FileUpload.fileUp(file, FileConstants.DEFAULT_ROOT_PATH, UuidUtil.get32UUID());
-        String  path = "http://localhost:8080/"+s;
+        String  path = "http://192.168.0.24:8080/"+s;
         note.setUsersId(users.getId());
         note.setNoteTitle(file.getOriginalFilename());
         note.setCreateTime(new Date());
