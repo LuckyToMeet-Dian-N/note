@@ -50,10 +50,13 @@ public class AdminOrdersController {
         orders.forEach(e -> {
             OrdersVO ordersVO;
             Users users = userInfoMapper.selectByPrimaryKey(e.getId());
-            ordersVO = new OrdersVO();
-            BeanUtils.copyProperties(e, ordersVO);
-            ordersVO.setUserName(users.getUserName());
-            list.add(ordersVO);
+            if (users!=null){
+                ordersVO = new OrdersVO();
+                BeanUtils.copyProperties(e, ordersVO);
+                ordersVO.setUserName(users.getUserName());
+                list.add(ordersVO);
+            }
+
         });
 
         return new ResultBean<>(list);

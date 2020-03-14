@@ -5,10 +5,7 @@ import com.gentle.bean.po.LabelAndNote;
 import com.gentle.bean.po.Note;
 import com.gentle.bean.po.Users;
 import com.gentle.exception.CheckException;
-import com.gentle.mapper.FilesMapper;
-import com.gentle.mapper.LabelAndNoteMapper;
-import com.gentle.mapper.LabelMapper;
-import com.gentle.mapper.NoteMapper;
+import com.gentle.mapper.*;
 import com.gentle.result.ResultBean;
 import com.gentle.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +29,8 @@ public class WordController {
     NoteMapper  noteMapper;
     @Resource
     FilesMapper filesMapper;
+    @Resource
+    UserInfoMapper userInfoMapper;
 
     /**
      * wrod 转笔记。
@@ -44,10 +43,14 @@ public class WordController {
         if (!(substring.equals("docx")|| substring.equals("doc"))){
             throw new CheckException("只允许 doc 和 docx 格式文件");
         }
+        Users users  = (Users) RequestAndResponseUtils.getRequest().getAttribute("users");
+        Users users1 = userInfoMapper.selectByPrimaryKey(users.getId());
+        if (users1.getUserType()==0){
+           throw new CheckException("非会员用户不支持使用 word 转换功能");
+        }
         String uuid = UuidUtil.get32UUID();
         uuid = uuid.substring(uuid.length()-20);
         String s = FileUpload.fileUp(file, FileConstants.DEFAULT_ROOT_PATH, uuid);
-        Users users  = (Users) RequestAndResponseUtils.getRequest().getAttribute("users");
         String contentWord=WordUtils1.readDataDocx(FileConstants.DEFAULT_ROOT_PATH+s);
 
         Note note = new Note();
