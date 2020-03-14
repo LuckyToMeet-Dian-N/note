@@ -50,12 +50,11 @@
                         {{scope.row.userName}}
                     </template>
                 </el-table-column>
-               
-                <el-table-column prop="payMoney" label="支付金额">
+                <!-- <el-table-column prop="payMoney" label="支付金额">
                         <template slot-scope="scope">
                         {{scope.row.payMoney}}
                     </template>
-                    </el-table-column>
+                    </el-table-column> -->
                 <el-table-column prop="payState" label="状态">
                         <template slot-scope="scope">
                       

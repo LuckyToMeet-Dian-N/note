@@ -30,3 +30,20 @@ export const allShare = query => {
         params: query
     });
 };
+
+
+export const deleteShare = query => {
+    return request({
+        url: 'api/users/deleteShare',
+        method: 'post',
+        data: qs.stringify(query)
+    });
+};
+
+export const downloadNoteByLabelId = query => {
+    return request({
+        url: 'api/users/downloadNoteByLabelId',
+        method: 'get',
+        params: query
+    });
+};

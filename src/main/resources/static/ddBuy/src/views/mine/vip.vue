@@ -38,10 +38,76 @@
                 </van-checkbox-group>
                 
          </div>
+         <div>
+          <van-radio-group v-model="radio">
+          <van-cell-group title="支付方式">
+            <van-cell clickable
+                      @click="radio = '1'">
+              <template slot="title">
+                <img src="./../../images/order/wx.png"
+                     alt=""
+                     width="25px"
+                     height="25px"
+                     style=" vertical-align: middle;padding-right:5px">
+                <span>微信支付</span>
+              </template>
+              <van-radio slot="right-icon"
+                         name="1"
+                         checked-color="#07c160" />
+            </van-cell>
+            <van-cell clickable
+                      @click="radio = '2'">
+              <template slot="title">
+                <img src="./../../images/order/zfb.png"
+                     alt=""
+                     width="25px"
+                     height="25px"
+                     style=" vertical-align: middle;padding-right:5px">
+                <span>支付宝</span>
+              </template>
+              <van-radio slot="right-icon"
+                         name="2"
+                         checked-color="#07c160" />
+            </van-cell>
+            <van-cell clickable
+                      @click="radio = '3'">
+              <template slot="title">
+                <img src="./../../images/order/hb.png"
+                     alt=""
+                     width="25px"
+                     height="25px"
+                     style=" vertical-align: middle;padding-right:5px">
+                <span>花呗</span>
+              </template>
+              <van-radio slot="right-icon"
+                         name="3"
+                         checked-color="#07c160" />
+            </van-cell>
+          </van-cell-group>
+        </van-radio-group>
+        </div>
+      <van-popup v-model="show">
+        <div class="pay_password" >
+            <!-- 密码输入框 -->
+            <div class="password_input">
+                <h3 style="text-align: center;margin-bottom: 30px">￥120</h3>
+                <van-password-input
+                        :value="value"
+                />
+            </div>
+            <!--键盘-->
+            <van-number-keyboard
+                    :show="show"
+                    @blur="show = false"
+                    @input="onInput"
+                    @delete="onDelete"
+            />
+        </div>
+    </van-popup>
 
     <van-submit-bar
         :price="12000"
-        button-text="提交订单"
+        button-text="立即支付"
         @submit ="save"
       />
   </div>
@@ -50,15 +116,18 @@
   import { Dialog, Toast } from 'vant'
 import { insertFeedBack } from '../../api/feedBack';
 import { createOrders } from '../../api/orders';
+import { updateOrderStatus } from '../../api/orders';
 
 
 export default {
   data () {
     return {
+      show:false,
+      radio:'',
       typeArray: [],
       // 路由传递过来的数据 active
       active:'',
-      money:'',
+      value:'',
       itemsTitle:'',
       message:'',
       checks: ['a']
@@ -69,29 +138,43 @@ export default {
   },
   methods: {
     save() {
-      let param={}
-      createOrders(param).then(resg => {
-            if (resg.code==0) {
-              Toast({
-                  message: this.$t('创建订单成功'),
-                  duration: 800
-              });
-              this.$router.push('orders');
-            }else{
-              Toast({
-                  message: this.$t(resg.msg),
-                  duration: 800
-              });
-            }});
+      if (this.radio=='') {
+        Toast('支付方式不能为空');
+        return false;
+      }
+        this.show=true;     
     },
     onClickLeft () {
       this.$router.back();
     },
     getData(){
-      console.log(1111)
+
     },
      back() {
       this.$router.go(-1);
+    },
+    onInput(key) {
+      this.value = (this.value + key).slice(0, 6);
+      if (this.value.length == 6) {
+            let param = {
+                password: this.value,
+            }
+          updateOrderStatus(param).then(resg => {
+            if (resg.code==0) {
+                 Toast('支付成功');
+                 this.show=false;
+                 this.value=''
+                 this.getData()
+            }else{
+              Toast(resg.msg);
+            }
+          });
+      }else {
+        this.errorInfo = '';
+      }
+    },
+    onDelete() {
+      this.value = this.value.slice(0, this.value.length - 1);
     },
   }
 }
@@ -121,5 +204,35 @@ export default {
       font-weight: bolder;
     }
   }
+  .pay_password {
+  background: #FAFAFA;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 63%;
+}
 
+.password_input {
+  position: fixed;
+  left: 0;
+  bottom: 250px;
+  width: 100%;
+}
+#myOrder {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 100;
+  background-color: #f5f5f5;
+  .van-icon {
+    color: #dedede;
+  }
+}
+.van-popup {
+            transform: none;
+        }
+ 
 </style>
