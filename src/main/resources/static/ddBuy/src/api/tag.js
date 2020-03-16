@@ -55,3 +55,11 @@ export const deleteLabelByNote = query => {
         data: qs.stringify(query)
     });
 };
+
+export const getVersionInfo = query => {
+    return request({
+        url: 'api/users/versionInfo',
+        method: 'get',
+        params: query
+    });
+};

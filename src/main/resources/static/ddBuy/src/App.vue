@@ -4,7 +4,7 @@
     <div v-show="$route.meta.showTabBar">
       <van-tabbar v-model="active">
           <van-tabbar-item to="/home" icon="home-o">最新</van-tabbar-item>
-          <van-tabbar-item to="/edit" icon="edit">记事</van-tabbar-item>
+          <van-tabbar-item to="/edit" icon="edit">笔记</van-tabbar-item>
           <van-tabbar-item to="/file" icon="paid">文件夹</van-tabbar-item>
           <van-tabbar-item to="/my" icon="user-o">我的</van-tabbar-item>
         </van-tabbar>

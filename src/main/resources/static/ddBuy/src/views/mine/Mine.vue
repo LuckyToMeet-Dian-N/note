@@ -42,7 +42,7 @@
       <van-grid :border=false :column-num="3">
           <van-grid-item >
             <b style="font-size: 30px">{{allCount}}</b>
-            <i style="font-size: 12px">总文稿</i>
+            <i style="font-size: 12px">笔记数</i>
           </van-grid-item>
           <van-grid-item icon="photo-o" >
             <b style="font-size: 30px">{{shareCount}}</b>
@@ -94,10 +94,10 @@
                 icon="comment-circle"
                 is-link
                 @click="goToPage('about')" />
-     <!-- <van-cell title="我的信箱"
+     <van-cell title="我的信箱"
                 icon="comment-circle"
                 is-link
-                @click="onFeedBack" /> -->
+                @click="onFeedBack" />
       <van-cell title="联系客服"
                 icon="phone"
                 value="客服时间 07:00-22:00"
@@ -106,6 +106,10 @@
                 icon="comment-circle"
                 is-link
                 @click="goToPage('feedBack')" />
+      <van-cell title="当前版本"
+                icon="comment-circle"
+                is-link
+                @click="goToPage('versionInfos')" />
     </van-cell-group>
     <div class="version">当前版本{{version}}</div>
     <!--路由的出口-->
