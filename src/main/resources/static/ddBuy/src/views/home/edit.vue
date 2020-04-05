@@ -1,6 +1,6 @@
 <template>
   <div id="collection">
-      <van-nav-bar title="文稿" left-arrow>
+      <van-nav-bar title="笔记" left-arrow>
           <van-icon name="shop-collect-o" slot="left" />
         </van-nav-bar>
       <van-grid clickable :column-num="2">
@@ -8,7 +8,7 @@
               icon="notes-o"
               link-type="navigateTo"
               @click="goToPage('quills')"
-              text="新文稿"
+              text="新笔记"
             />
             <van-grid-item
               icon="photo"

@@ -61,7 +61,7 @@ export default {
         }
     }; //添加请求头
      
-    axios.post('http://localhost:8080/api/users/usersUploadFile',formData,config)
+    axios.post('http://192.168.0.24:8080/api/users/usersUploadFile',formData,config)
     .then(response=>{
       console.log(response)
           if (response.data.code==0) {

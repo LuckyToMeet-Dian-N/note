@@ -39,7 +39,7 @@
                 
          </div>
          <div>
-          <van-radio-group v-model="radio">
+          <!-- <van-radio-group v-model="radio">
           <van-cell-group title="支付方式">
             <van-cell clickable
                       @click="radio = '1'">
@@ -84,7 +84,7 @@
                          checked-color="#07c160" />
             </van-cell>
           </van-cell-group>
-        </van-radio-group>
+        </van-radio-group> -->
         </div>
       <van-popup v-model="show">
         <div class="pay_password" >
@@ -138,10 +138,10 @@ export default {
   },
   methods: {
     save() {
-      if (this.radio=='') {
-        Toast('支付方式不能为空');
-        return false;
-      }
+      // if (this.radio=='') {
+      //   Toast('支付方式不能为空');
+      //   return false;
+      // }
         this.show=true;     
     },
     onClickLeft () {
@@ -162,6 +162,10 @@ export default {
           updateOrderStatus(param).then(resg => {
             if (resg.code==0) {
                  Toast('支付成功');
+                 var info = JSON.parse(localStorage.getItem('userInfo'));
+                 info.typeName = '会员'
+                 info.userType= 1
+                  localStorage.setItem('userInfo',JSON.stringify(info))
                  this.show=false;
                  this.value=''
                  this.getData()

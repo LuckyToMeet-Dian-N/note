@@ -46,8 +46,8 @@ export default {
       
       var info = JSON.parse(localStorage.getItem('userInfo'))
 
-      if (file.file.size>1 * 1024 * 1024*1024 &&info.userType==0) {
-           Notify( {type: 'danger', message: '非会员视频上传不能超过 10M'} );
+      if (file.file.size>10 * 1024*1024 &&info.userType==1) {
+           Notify( {type: 'danger', message: '会员用户视频上传不能超过 10M'} );
         return false;
       }
 
@@ -61,13 +61,13 @@ export default {
         }
     }; //添加请求头
      
-    axios.post('http://localhost:8080/api/users/usersUploadFile',formData,config)
+    axios.post('http://192.168.0.24:8080/api/users/usersUploadFile',formData,config)
     .then(response=>{
       console.log(response)
           if (response.data.code==0) {
                 Notify( {type: 'primary', message: '上传成功'} );
             }else{
-                Notify({ type: 'danger', message: '上传失败'} );
+                Notify({ type: 'danger', message:response.data.msg } );
             }
      }).catch(err => {
               Toast({

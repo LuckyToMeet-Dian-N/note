@@ -68,6 +68,12 @@ const router = new Router({
             component: () => import( '../views/mine/FeedBack.vue'),
             meta: { title: '我的分享',showTabBar: false,  }
         },
+        {
+            path: '/versionInfos',
+            name: 'versionInfos',
+            component: () => import( '../views/mine/version.vue'),
+            meta: { title: '版本',showTabBar: false,  }
+        },
          {
            path: '/choiseNote',
            name: 'choiseNote',
@@ -151,6 +157,7 @@ const router = new Router({
             component: () => import( '../views/login/Login.vue'),
             meta: { title: '登录',showTabBar: false,  }
         },
+        
         
     ]
 

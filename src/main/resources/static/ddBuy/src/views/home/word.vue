@@ -48,13 +48,13 @@ export default {
           'token': localStorage.getItem('token')
         }
     }; //添加请求头
-    axios.post('http://localhost:8080/api/users/insertNoteByWord',formData,config)
+    axios.post('http://192.168.0.24:8080/api/users/insertNoteByWord',formData,config)
     .then(response=>{
       console.log(response)
           if (response.data.code==0) {
                 Notify( {type: 'primary', message: '上传成功'} );
             }else{
-                Notify({ type: 'danger', message: '上传失败'} );
+                Notify({ type: 'danger', message: response.data.msg} );
             }
      }).catch(err => {
               Toast({
