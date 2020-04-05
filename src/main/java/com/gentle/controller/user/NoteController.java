@@ -40,7 +40,7 @@ public class NoteController {
         Users users  = (Users) RequestAndResponseUtils.getRequest().getAttribute("users");
         note.setUsersId(users.getId());
         note.setCreateTime(new Date());
-        noteMapper.insert(note);
+        int insert = noteMapper.insert(note);
         Files files = new Files();
         files.setUsersId(users.getId());
         List<Files> select = filesMapper.select(files);
@@ -56,7 +56,7 @@ public class NoteController {
             files2.setNoteList(select.get(0).getNoteList() + "," + note.getId());
             filesMapper.updateByPrimaryKeySelective(files2);
         }
-        return new ResultBean<>();
+        return new ResultBean<>(note.getId()+"");
     }
         @Resource
         CollectionMapper collectionMapper;

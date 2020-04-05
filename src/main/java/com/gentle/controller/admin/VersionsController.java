@@ -44,7 +44,7 @@ public class VersionsController {
         ValidataUtils.isNotNullByString(versions.getDescription(),"版本描述不能为空！");
         ValidataUtils.isNotNullByString(versions.getVersion(),"版本号不能为空！");
         String s = FileUpload.fileUp(file, FileConstants.DEFAULT_ROOT_PATH, UuidUtil.get32UUID());
-        String  path = "http://localhost:8080/"+s;
+        String  path = "http://192.168.37.1:8080/"+s;
         versions.setPath(path);
         versions.setCreateTime(new Date());
         int insert = versionsMapper.insert(versions);

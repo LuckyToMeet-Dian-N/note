@@ -1,14 +1,8 @@
 package com.gentle.controller.open;
 
-import com.gentle.bean.po.Files;
-import com.gentle.bean.po.LabelAndNote;
-import com.gentle.bean.po.Note;
-import com.gentle.bean.po.Users;
+import com.gentle.bean.po.*;
 import com.gentle.exception.CheckException;
-import com.gentle.mapper.FilesMapper;
-import com.gentle.mapper.LabelAndNoteMapper;
-import com.gentle.mapper.NoteMapper;
-import com.gentle.mapper.UserInfoMapper;
+import com.gentle.mapper.*;
 import com.gentle.result.ResultBean;
 import com.gentle.service.OpenService;
 import com.gentle.utils.FileDownload;
@@ -18,6 +12,7 @@ import com.gentle.utils.WordUtils1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import sun.text.normalizer.VersionInfo;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -134,6 +129,12 @@ public class ApiLoginController {
             e.printStackTrace();
         }
     }
-
-
+    @Resource
+    VersionsMapper versionsMapper;
+    @GetMapping(value = "/users/versionInfo")
+    public ResultBean<Versions> versionInfo() {
+        List<Versions> versions = versionsMapper.selectAll();
+        Versions versions1 = versions.get(versions.size() - 1);
+        return new ResultBean<>(versions1);
+    }
 }

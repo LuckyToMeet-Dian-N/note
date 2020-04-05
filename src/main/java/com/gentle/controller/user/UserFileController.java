@@ -3,27 +3,21 @@ package com.gentle.controller.user;
 import com.gentle.bean.po.Files;
 import com.gentle.bean.po.Note;
 import com.gentle.bean.po.Users;
-import com.gentle.bean.po.Versions;
-import com.gentle.bean.vo.FileType;
 import com.gentle.bean.vo.FilesVO;
 import com.gentle.exception.CheckException;
 import com.gentle.mapper.FilesMapper;
 import com.gentle.mapper.NoteMapper;
 import com.gentle.mapper.UserInfoMapper;
 import com.gentle.result.ResultBean;
-import com.gentle.service.FileService;
 import com.gentle.utils.*;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.awt.*;
 import java.util.*;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -163,7 +157,7 @@ public class UserFileController {
             throw new CheckException("不支持的类型");
         }
         String s = FileUpload.fileUp(file, FileConstants.DEFAULT_ROOT_PATH, UuidUtil.get32UUID());
-        String  path = "http://192.168.0.24:8080/"+s;
+        String path = "http://192.168.37.1:8080/"+s;
         note.setUsersId(users.getId());
         note.setNoteTitle(file.getOriginalFilename());
         note.setCreateTime(new Date());
