@@ -4,6 +4,7 @@ import com.gentle.bean.po.Users;
 import com.gentle.bean.vo.UsersVO;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.Update;
 import tk.mybatis.mapper.common.BaseMapper;
 
@@ -22,4 +23,8 @@ public interface UserInfoMapper extends BaseMapper<Users> {
     int updatePassword(@Param("password") String password, @Param("userId") int userId);
     @Select("select count(*) as sheets from users group by date_format(create_time,'%Y-%m') limit 5 ")
     List<Integer> selectTimebyMon();
+
+    @SelectProvider(method="queryUsers",type=MySqlProvider.class)
+    List<Users> queryUserList(Users users);
+
 }

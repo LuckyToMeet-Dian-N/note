@@ -150,7 +150,7 @@ public class UserFileController {
                 throw new CheckException("非会员用户不支持使用视频文稿！");
             }else {
                 if (file.getSize()>1024*1024*10){
-                    throw new CheckException("会员用户最大可上传 10M 文件");
+                    throw new CheckException("会员用户最大可上传 50M 文件");
                 }
             }
         }else {

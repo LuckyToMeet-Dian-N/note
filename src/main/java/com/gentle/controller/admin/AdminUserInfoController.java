@@ -1,15 +1,14 @@
 package com.gentle.controller.admin;
+
 import com.gentle.bean.po.Users;
-import com.gentle.bean.vo.UsersVO;
 import com.gentle.exception.CheckException;
 import com.gentle.mapper.OpenUsersMapper;
 import com.gentle.mapper.UserInfoMapper;
 import com.gentle.result.ResultBean;
-
-import com.gentle.service.OpenService;
 import com.gentle.service.UserInfoService;
 import com.gentle.utils.ValidataUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -34,9 +33,9 @@ public class AdminUserInfoController {
         return new ResultBean<>(userInfoService.updateUserInfo(users));
     }
     @GetMapping(value = "listUsers")
-    public ResultBean<List<Users>> listUsers() {
-        System.out.println("---");
-        return new ResultBean<>(userInfoService.listUsers());
+    public ResultBean<List<Users>> listUsers(Users users) {
+        System.out.println(users);
+        return new ResultBean<>(userInfoMapper.queryUserList(users));
     }
     @PostMapping(value = "selectUsers")
     public ResultBean<String> selectUsers(int userId) {
