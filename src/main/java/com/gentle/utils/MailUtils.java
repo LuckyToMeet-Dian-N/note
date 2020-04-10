@@ -21,7 +21,7 @@ public class MailUtils {
     //发件人账户名
     public static String senderAccount = "Gentle";
     //发件人账户密码
-    public static String senderPassword = "wuxiwen123";
+    public static String senderPassword = "";
 
     public static void sendEmail(String title,String content,String recAddr) throws Exception {
         //1、连接邮件服务器的参数配置

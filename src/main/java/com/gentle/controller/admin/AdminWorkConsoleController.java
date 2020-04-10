@@ -10,6 +10,7 @@ import com.gentle.mapper.ShareMapper;
 import com.gentle.mapper.UserInfoMapper;
 import com.gentle.result.ResultBean;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +30,7 @@ import java.util.List;
 @CrossOrigin("*")
 public class AdminWorkConsoleController {
 
-    @Resource
+    @Autowired
     NoteMapper noteMapper;
 
     @Resource
