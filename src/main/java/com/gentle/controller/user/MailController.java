@@ -43,6 +43,7 @@ public class MailController {
                 MailUtils.sendEmail(note.getNoteTitle(),note.getFilePath(),eMail);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             throw new CheckException("发送失败，请稍后重试");
         }
         return new ResultBean<>();
